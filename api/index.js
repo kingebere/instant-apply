@@ -12,9 +12,8 @@ app.use(morgan("dev"));
 
 //API ROUTES
 app.get("/getUser", async (req, res) => {
-	let supabaseUrl = "https://epcjufipobybxdmcqjgb.supabase.co";
-	let supabaseKey =
-		"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVwY2p1Zmlwb2J5YnhkbWNxamdiIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NzIyMzU1MDksImV4cCI6MTk4NzgxMTUwOX0.MAZAUEozeDU7f6ZKwia0OMlJ8WnZFi-FCn-4cpAUCcE";
+	let supabaseUrl = "url";
+	let supabaseKey = "key";
 
 	let supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
 	const token = req.headers["authorization"].split(" ")[1];
@@ -28,7 +27,7 @@ app.get("/getUser", async (req, res) => {
 			.select("firstName, lastName, email,phone,pdf,linkedin,github,website")
 			.eq("id", user.id);
 		res.status(200).json({
-			data:dbdata[0],
+			data: dbdata[0],
 		});
 	}
 });
