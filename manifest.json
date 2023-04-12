@@ -1,0 +1,15 @@
+{
+    "name": "Instant Apply",
+    "description": "Instant Apply",
+    "version": "1.0",
+    "manifest_version": 3,
+    "background": {
+      "service_worker": "background.js"
+    },
+    "content_security_policy": "script-src 'self' https://www.gstatic.com/ https://*.firebaseio.com https://www.googleapis.com https://www.googletagmanager.com; object-src 'self'",
+    "permissions": ["storage"],
+      "content_scripts":[{
+        "matches": ["https://*.boards.greenhouse.io/*"],
+        "js":["instant.js"]
+    }]
+  }
