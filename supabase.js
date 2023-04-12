@@ -1,5 +1,11 @@
-import { createClient } from '@supabase/supabase-js';
-
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-export const supabase = createClient(supabaseUrl, supabaseKey);
+// chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
+// 	// 2. A page requested user data, respond with a copy of `user`
+// 	if (message === "fetchuser") {
+// 		fetch("http://localhost:8000/getUser")
+// 			.then((response) => response.json())
+//             .then(async(responseData) => {
+//                 console.log(responseData)
+//                 await sendResponse('hey')
+//             });
+// 	}
+// });
