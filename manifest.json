@@ -4,10 +4,13 @@
     "version": "1.0",
     "manifest_version": 3,
     "background": {
-      "service_worker": "background.js"
+      "service_worker": "popup.js"
     },
-    "content_security_policy": "script-src 'self' https://www.gstatic.com/ https://*.firebaseio.com https://www.googleapis.com https://www.googletagmanager.com; object-src 'self'",
-    "permissions": ["storage"],
+    "action": {
+        "default_title": "Instant Apply",
+        "default_popup": "background.html"
+      },
+    "permissions": ["scripting", "activeTab", "tabs"],
       "content_scripts":[{
         "matches": ["https://*.boards.greenhouse.io/*"],
         "js":["instant.js"]
