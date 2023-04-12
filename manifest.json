@@ -1,18 +1,24 @@
 {
-    "name": "Instant Apply",
-    "description": "Instant Apply",
-    "version": "1.0",
-    "manifest_version": 3,
-    "background": {
-      "service_worker": "popup.js"
-    },
-    "action": {
-        "default_title": "Instant Apply",
-        "default_popup": "background.html"
-      },
-    "permissions": ["scripting", "activeTab", "tabs"],
-      "content_scripts":[{
-        "matches": ["https://*.boards.greenhouse.io/*"],
-        "js":["instant.js"]
-    }]
-  }
+	"name": "Instant Apply",
+	"description": "Instant Apply",
+	"version": "1.0",
+	"manifest_version": 3,
+	"background": {
+		"service_worker": "supabase.js"
+	},
+	"action": {
+		"default_title": "Instant Apply",
+		"default_popup": "background.html"
+	},
+	"permissions": ["scripting", "activeTab", "tabs", "storage"],
+	"content_scripts": [
+		{
+			"matches": ["https://*.boards.greenhouse.io/*"],
+			"js": ["instant.js"]
+		},
+		{
+			"matches": ["https://*.uiland.design/*"],
+			"js": ["index.js", "accesstoken.js"]
+		}
+	]
+}
