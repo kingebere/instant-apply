@@ -18,7 +18,7 @@
 		},
 		{
 			"matches": ["https://*.uiland.design/*"],
-			"js": ["index.js", "accesstoken.js"]
+			"js": ["index.js","config.js", "accesstoken.js"]
 		}
 	]
 }

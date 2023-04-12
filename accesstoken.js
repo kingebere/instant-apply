@@ -1,6 +1,6 @@
 window.onload = () => {
-	const supabaseUrl = 'url'
-	const supabaseKey = 'key'
+	const supabaseUrl = urlsupa
+	const supabaseKey = keysupa
 	const supabaseff = supabase.createClient(supabaseUrl, supabaseKey);
 
 	supabaseff.auth.getSession().then((session) => {
