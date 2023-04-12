@@ -12,8 +12,8 @@ app.use(morgan("dev"));
 
 //API ROUTES
 app.get("/getUser", async (req, res) => {
-	let supabaseUrl = "url";
-	let supabaseKey = "key";
+	let supabaseUrl = process.env.URL;
+	let supabaseKey = process.env.KEY;
 
 	let supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
 	const token = req.headers["authorization"].split(" ")[1];
