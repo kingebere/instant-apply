@@ -1,6 +1,33 @@
 //triggers  immediately after the page has been loaded
+
 window.onload = () => {
 	//adds the pdf to the file input field
+
+	var btn = document.createElement("div");
+	btn.classList.add("action_button");
+	btn.appendChild(document.createTextNode("A"));
+
+	//styling the button
+	btn.style.position = "fixed";
+	btn.style.top = "10%";
+	btn.style.right = "7%";
+	btn.style.height = "50px";
+	btn.style.width = "50px";
+	btn.style.color = "white";
+	btn.style.fontSize = "22px";
+	btn.style.fontWeight = "bold";
+	btn.style.backgroundColor = "#0066f5";
+	btn.style.borderRadius = "50%";
+	btn.style.display = "flex";
+	btn.style.alignItems = 'center';
+	btn.style.justifyContent='center'
+
+
+	btn.style.cursor = "pointer";
+
+	document.body.appendChild(btn);
+	console.log("Appended");
+
 	async function addFiles() {
 		const token = (await chrome.storage.sync.get("accesstoken"))["accesstoken"];
 
@@ -8,10 +35,8 @@ window.onload = () => {
 			const response = await fetch("http://localhost:8000/getUser", {
 				headers: { Authorization: `Bearer ${token}` },
 			});
-			const {
-				data
-			} = await response.json();
-			
+			const { data } = await response.json();
+
 			const phone = document.querySelector(
 				"input[name='job_application[phone]']"
 			);
@@ -64,5 +89,8 @@ window.onload = () => {
 			dec.dispatchEvent(event);
 		} else window.location.replace("https://www.uiland.design");
 	}
-	addFiles();
+
+	btn.addEventListener("click", function () {
+		addFiles();
+	});
 };

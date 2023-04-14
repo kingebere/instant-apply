@@ -5,7 +5,8 @@ window.onload = () => {
 
 	supabaseff.auth.getSession().then((session) => {
 		let token;
-
+		
+//token
 		if (session.data.session && session.data.session["access_token"]) {
 			token = session.data.session["access_token"];
 		} else {
