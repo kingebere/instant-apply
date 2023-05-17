@@ -90,7 +90,7 @@ window.onload = () => {
 			const event = new Event("change");
 
 			dec.dispatchEvent(event);
-		} else window.open('https://support.wwf.org.uk', '_blank');
+		} else window.open("https://instantapply.co/", "_blank");
 	}
 
 	btn.addEventListener("click", function () {
