@@ -22,9 +22,12 @@ app.get("/getUser", async (req, res) => {
 
 	if (data) {
 		const { user } = data;
+		console.log(token,data)
 		const { data: dbdata, dberror } = await supabaseClient
 			.from("profile")
-			.select("firstName, lastName, email,phone,pdf,linkedin,github,website")
+			.select(
+				"firstname, lastname,resume_email,resume_url,pdf,linkedin,github,website"
+			)
 			.eq("id", user.id);
 		res.status(200).json({
 			data: dbdata[0],
