@@ -17,8 +17,8 @@
 			"js": ["instant.js"]
 		},
 		{
-			"matches": ["https://*.uiland.design/*"],
-			"js": ["index.js","config.js", "accesstoken.js"]
+			"matches": ["https://*.instantapply.co/*"],
+			"js": ["index.js", "config.js", "accesstoken.js"]
 		}
 	]
 }
