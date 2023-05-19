@@ -22,16 +22,22 @@ app.get("/getUser", async (req, res) => {
 
 	if (data) {
 		const { user } = data;
-		console.log(token,data)
+
 		const { data: dbdata, dberror } = await supabaseClient
 			.from("profile")
-			.select(
-				"firstname, lastname,resume_email,resume_url,pdf,linkedin,github,website"
-			)
+			.select("*")
 			.eq("id", user.id);
-		res.status(200).json({
-			data: dbdata[0],
-		});
+
+		if (dbdata) {
+			return res.status(200).json({
+				data: dbdata[0],
+			});
+		}
+
+		return res.status(500).json({
+			"message":"Internal Server Error"
+		})
+
 	}
 });
 
