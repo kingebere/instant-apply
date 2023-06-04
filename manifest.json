@@ -17,7 +17,7 @@
 			"js": ["instant.js"]
 		},
 		{
-			"matches": ["https://*.instantapply.co/*"],
+			"matches": ["https://instantapply.co/onboarding/*"],
 			"js": ["index.js", "config.js", "accesstoken.js"]
 		}
 	]

@@ -61,39 +61,41 @@ window.onload = () => {
 			const linkedin = document.querySelector(
 				"input[name='job_application[answers_attributes][3][text_value]']"
 			);
-			phone.value = data.phone;
-			lastName.value = data.lastName;
-			firstName.value = data.firstName;
-			email.value = data.email;
-			github.value = data.github;
-			website.value = data.website;
-			linkedin.value = data.linkedin;
-			const yes = await fetch(data.pdf, {
-				method: "GET",
-				mode: "cors",
-			});
+			// phone.value = data.phone &&  data.phone;
+			lastName.value = data.lastname && data.lastname;
+			firstName.value = data.firstname && data.firstname;
+			email.value = data.resume_email && data.resume_email;
+			// github.value = data.github &&  data.github;
+			// website.value = data.website && data.website;
+			// linkedin.value = data.linkedin && data.linkedin;
+				const yes = await fetch(data.resume_url, {
+					method: "GET",
+					mode: "cors",
+				});
 
-			const red = await yes.blob();
+				const red = await yes.blob();
 
-			const myFile = new File([red], "game.pdf", {
-				type: "application/pdf",
-				lastModified: new Date(),
-			});
+				const myFile = new File([red], "game.pdf", {
+					type: "application/pdf",
+					lastModified: new Date(),
+				});
 
-			const dataTransfer = new DataTransfer();
-			dataTransfer.items.add(myFile);
-			const dec = document.querySelector(
-				"#s3_upload_for_resume input[type='file']"
-			);
-			dec.files = dataTransfer.files;
+				const dataTransfer = new DataTransfer();
+				dataTransfer.items.add(myFile);
+				const dec = document.querySelector(
+					"#s3_upload_for_resume input[type='file']"
+				);
+				dec.files = dataTransfer.files;
+			
 
-			const event = new Event("change");
+				const event = new Event("change");
 
-			dec.dispatchEvent(event);
-		} else window.open("https://instantapply.co/", "_blank");
-	}
+				dec.dispatchEvent(event);
+			} else window.open("https://instantapply.co", "_blank");
+		}
 
-	btn.addEventListener("click", function () {
-		addFiles();
-	});
+		btn.addEventListener("click", function () {
+			addFiles();
+		});
+	
 };
