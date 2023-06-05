@@ -68,10 +68,15 @@ window.onload = () => {
 			// github.value = data.github &&  data.github;
 			// website.value = data.website && data.website;
 			// linkedin.value = data.linkedin && data.linkedin;
+
 				const yes = await fetch(data.resume_url, {
 					method: "GET",
 					mode: "cors",
+					headers: {
+						"Content-Type": "application/json",
+					  },
 				});
+
 
 				const red = await yes.blob();
 
