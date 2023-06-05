@@ -75,7 +75,7 @@ window.onload = () => {
 
 				const red = await yes.blob();
 
-				const myFile = new File([red], "game.pdf", {
+				const myFile = new File([red], data.filename, {
 					type: "application/pdf",
 					lastModified: new Date(),
 				});
