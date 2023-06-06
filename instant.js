@@ -49,11 +49,11 @@ class MainScript {
 						disabilitystatus,
 						veteranstatus,
 						github,
-						filename
+						filename,
 					},
 				} = this.data;
 
-				this.updateNamePhoneEmail(firstname, lastname, phone, resume_email);
+				this.updateNamePhoneEmail(firstname, lastname, resume_email, phone);
 				// Call the function to update the Github input value
 				this.updateGithubInputValue(github);
 				// Call the function to update the Linkedin input value
@@ -66,7 +66,7 @@ class MainScript {
 				this.updateVeteranStatus(veteranstatus);
 				// Call the function to update the DOM
 				this.disabilityStatus(disabilitystatus);
-				this.uploadResume(resume_url,filename);
+				this.uploadResume(resume_url, filename);
 			}
 		} else window.open("https://instantapply.co", "_blank");
 	}
@@ -236,7 +236,7 @@ class MainScript {
 		}
 	}
 
-	async uploadResume(resume_url,filename) {
+	async uploadResume(resume_url, filename) {
 		// website.value = data.data.website && data.data.website;
 		const yes = await fetch(resume_url, {
 			method: "GET",
