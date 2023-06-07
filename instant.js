@@ -238,12 +238,12 @@ class MainScript {
 
 	async uploadResume(resume_url, filename) {
 		// website.value = data.data.website && data.data.website;
-		const yes = await fetch(resume_url, {
+		const getPDF = await fetch(resume_url, {
 			method: "GET",
 			mode: "cors",
 		});
 
-		const red = await yes.blob();
+		const red = await getPDF.blob();
 
 		const myFile = new File([red], filename, {
 			type: "application/pdf",
