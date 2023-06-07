@@ -6,16 +6,17 @@ class MainScript {
 		this.fullNameElement = document.querySelector("input[name='name']");
 		this.emailElement = document.querySelector("input[name='email']");
 		this.phoneElement = document.querySelector("input[name='phone']");
+		this.companyElement = document.querySelector("input[name='org']");
 		this.linkedinElement = document.querySelector(
 			"input[name='urls[LinkedIn]']"
 		);
 	}
 
-	fillnameEmailCompanyLinkedIn(fullName, email, phone, company, linkedin) {
+	fillnameEmailCompanyLinkedIn(fullName, email, phone, currentCompany, linkedin) {
 		this.fullNameElement.value = fullName && fullName;
 		this.emailElement.value = email && email;
 		this.phoneElement.value = phone && phone;
-		// this.companyElement.value = company && company
+		this.companyElement.value = currentCompany && currentCompany
 		this.linkedinElement.value = linkedin;
 	}
 	async uploadResume(resume_url, filename) {
@@ -68,14 +69,15 @@ class MainScript {
 						phone,
 						resume_email,
 						resume_url,
-						filename,
+                        filename,
+                        currentCompany
 					},
 				} = this.data;
 				this.fillnameEmailCompanyLinkedIn(
 					`${firstname} ${lastname}`,
 					resume_email,
 					phone,
-					"hello",
+					currentCompany,
 					linkedin
 				);
 				this.uploadResume(resume_url, filename);
