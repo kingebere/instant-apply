@@ -83,6 +83,7 @@ class MainScript {
 		img.style.position = "fixed";
 		img.style.top = "10%";
 		img.style.right = "7%";
+		img.style.borderRadius = "50%";
 		// btn.style.height = "50px";
 		// btn.style.width = "50px";
 		// btn.style.color = "white";

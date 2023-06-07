@@ -15,6 +15,9 @@
 		{
 			"matches": ["https://*.boards.greenhouse.io/*"],
 			"js": ["instant.js"]
+		},{
+			"matches":["https://*.lever.co/talentkompass-deutschland/*/apply"],
+			"js": ["lever.js"]
 		},
 		{
 			"matches": ["https://instantapply.co/onboarding/*"],
