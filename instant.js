@@ -75,15 +75,17 @@ class MainScript {
 		var btn = document.createElement("div");
 		btn.classList.add("action_button");
 		var img = document.createElement("img");
-		img.src = "https://instantapply.co/assets/images/Instantapply-logo.png";
-		img.style.width = "50px";
-		img.style.height = "50px";
+		img.src = "https://instantapply.co/assets/images/instantapply-logo.svg";
+		img.style.width = "60px";
+		img.style.height = "60px";
 		btn.appendChild(img);
 		//styling the button
 		img.style.position = "fixed";
 		img.style.top = "10%";
 		img.style.right = "7%";
-		img.style.borderRadius = "50%";
+		img.style.borderRadius = "8px";
+		img.style.backgroundColor="#ede2ff" ;
+		img.style.padding="10px"   ;
 		// btn.style.height = "50px";
 		// btn.style.width = "50px";
 		// btn.style.color = "white";

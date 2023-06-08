@@ -89,7 +89,7 @@ class MainScript {
 		var btn = document.createElement("div");
 		btn.classList.add("action_button");
 		var img = document.createElement("img");
-		img.src = "https://instantapply.co/assets/images/Instantapply-logo.png";
+		img.src = "https://instantapply.co/assets/images/instantapply-logo.svg";
 		img.style.width = "50px";
 		img.style.height = "50px";
 		btn.appendChild(img);
