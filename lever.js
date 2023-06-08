@@ -54,7 +54,7 @@ class MainScript {
 
 		if (session) {
 			console.log(session);
-			const response = await fetch("http://localhost:8000/getUser", {
+			const response = await fetch("https://instantapply.co/api/getUser", {
 				method: "POST",
 				mode: "cors",
 				body: JSON.stringify({
