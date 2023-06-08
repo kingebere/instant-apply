@@ -5,7 +5,6 @@ window.onload = () => {
 
 	supabaseff.auth.getSession().then((session) => {
 		let token;
-		
 
 		//token
 		if (session.data.session && session.data.session["access_token"]) {
@@ -16,6 +15,10 @@ window.onload = () => {
 
 		chrome.storage.sync.set({ accesstoken: token }, function () {
 			console.log("Access token has been set");
+		});
+
+		chrome.storage.sync.set({ session: JSON.stringify(session) }, function () {
+			console.log("session has been set");
 		});
 	});
 };
