@@ -12,11 +12,17 @@ class MainScript {
 		);
 	}
 
-	fillnameEmailCompanyLinkedIn(fullName, email, phone, currentCompany, linkedin) {
+	fillnameEmailCompanyLinkedIn(
+		fullName,
+		email,
+		phone,
+		currentCompany,
+		linkedin
+	) {
 		this.fullNameElement.value = fullName && fullName;
 		this.emailElement.value = email && email;
 		this.phoneElement.value = phone && phone;
-		this.companyElement.value = currentCompany && currentCompany
+		this.companyElement.value = currentCompany && currentCompany;
 		this.linkedinElement.value = linkedin;
 	}
 	async uploadResume(resume_url, filename) {
@@ -44,14 +50,17 @@ class MainScript {
 	}
 
 	async handlePopUpbuttonClicked() {
-		const token = (await chrome.storage.sync.get("accesstoken"))["accesstoken"];
+		const session = (await chrome.storage.sync.get("session"))["session"];
 
-		if (token) {
+		if (session) {
+			console.log(session);
 			const response = await fetch("https://instantapply.co/api/getUser", {
-				method: "GET",
+				method: "POST",
 				mode: "cors",
+				body: JSON.stringify({
+					session,
+				}),
 				headers: {
-					Authorization: `Bearer ${token}`,
 					"Content-Type": "application/json",
 				},
 			});
@@ -69,8 +78,8 @@ class MainScript {
 						phone,
 						resume_email,
 						resume_url,
-                        filename,
-                        currentCompany
+						filename,
+						currentCompany,
 					},
 				} = this.data;
 				this.fillnameEmailCompanyLinkedIn(
