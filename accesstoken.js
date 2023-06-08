@@ -13,10 +13,6 @@ window.onload = () => {
 			token = null;
 		}
 
-		chrome.storage.sync.set({ accesstoken: token }, function () {
-			console.log("Access token has been set");
-		});
-
 		chrome.storage.sync.set({ session: JSON.stringify(session) }, function () {
 			console.log("session has been set");
 		});
