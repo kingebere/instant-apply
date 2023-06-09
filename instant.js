@@ -19,17 +19,19 @@ class MainScript {
 
   //handle when popbutton is clicked
   async handlePopUpbuttonClicked() {
-    const token = (await chrome.storage.sync.get("accesstoken"))["accesstoken"]
+	const session = (await chrome.storage.sync.get("session"))["session"]
 
     if (token) {
-      const response = await fetch("https://instantapply.co/api/getUser", {
-        method: "GET",
-        mode: "cors",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      })
+		const response = await fetch("https://instantapply.co/api/getUser", {
+			method: "POST",
+			mode: "cors",
+			body: JSON.stringify({
+			  session,
+			}),
+			headers: {
+			  "Content-Type": "application/json",
+			},
+		  })
 
       if (response.status === 401)
         window.open("https://instantapply.co", "_blank")
