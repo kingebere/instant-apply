@@ -32,9 +32,9 @@ class MainScript {
 			mode: "cors",
 		});
 
-		const red = await getPDF.blob();
+		const pdfBlob = await getPDF.blob();
 
-		const myFile = new File([red], filename, {
+		const myFile = new File([pdfBlob], filename, {
 			type: "application/pdf",
 			lastModified: new Date(),
 		});
