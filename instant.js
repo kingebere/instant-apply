@@ -21,7 +21,7 @@ class MainScript {
   async handlePopUpbuttonClicked() {
 	const session = (await chrome.storage.sync.get("session"))["session"]
 
-    if (token) {
+    if (session) {
 		const response = await fetch("https://instantapply.co/api/getUser", {
 			method: "POST",
 			mode: "cors",
