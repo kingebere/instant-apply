@@ -1,7 +1,7 @@
 {
 	"name": "Instant Apply",
 	"description": "Autofill your Job Applications in one click",
-	"version": "1.0",
+	"version": "0.0.0.1",
 	"manifest_version": 3,
 	"icons": {
 		"16": "logo/logo.png",
@@ -9,13 +9,13 @@
 		"128": "logo/logo.png"
 	  },
 	"background": {
-		"service_worker": "supabase.js"
+		"service_worker": "background.js"
 	},
 	"action": {
 		"default_title": "Instant Apply",
 		"default_popup": "background.html"
 	},
-	"permissions": ["scripting", "activeTab", "tabs", "storage"],
+	"permissions": ["storage"],
 	"content_scripts": [
 		{
 			"matches": ["https://*.boards.greenhouse.io/*"],
@@ -23,7 +23,11 @@
 		},{
 			"matches":["https://*.lever.co/*/apply"],
 			"js": ["lever.js"]
+		},{
+			"matches":["https://*.jobs.ashbyhq.com/*"],
+			"js": ["ashbyhq.js"]
 		},
+		
 		{
 			"matches": ["https://instantapply.co/onboarding/*"],
 			"js": ["index.js", "config.js", "accesstoken.js"]
