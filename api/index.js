@@ -38,6 +38,28 @@ app.post("/getUser", async (req, res) => {
 	});
 });
 
+app.post("/submitJob", async () => {
+	let supabaseUrl = process.env.URL;
+	let supabaseKey = process.env.KEY;
+	let supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+
+	const { jobDescription } = req.body;
+
+	try {
+		const { data, error } = await supabaseClient
+			.from("jobsSubmitted ")
+			.insert([jobDescription]);
+
+		return res.status(200).json({
+			data: data,
+		});
+	} catch (error) {
+		return res.status(500).json({
+			message: "Internal Server Error",
+		});
+	}
+});
+
 const port = 8000;
 app.listen(port, () => {
 	console.log("listening on port " + port);
