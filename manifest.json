@@ -23,7 +23,11 @@
 		},{
 			"matches":["https://*.lever.co/*/apply"],
 			"js": ["lever.js"]
+		},{
+			"matches":["https://*.jobs.ashbyhq.com/*"],
+			"js": ["ashbyhq.js"]
 		},
+		
 		{
 			"matches": ["https://instantapply.co/onboarding/*"],
 			"js": ["index.js", "config.js", "accesstoken.js"]
