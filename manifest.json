@@ -27,10 +27,15 @@
 			"matches":["https://*.jobs.ashbyhq.com/*"],
 			"js": ["ashbyhq.js"]
 		},
+		{
+			"matches":["https://*.lever.co/*/thanks"],
+			"js": ["submitlever.js"]
+		},
 		
 		{
 			"matches": ["https://instantapply.co/onboarding/*"],
 			"js": ["index.js", "config.js", "accesstoken.js"]
 		}
+		
 	]
 }
