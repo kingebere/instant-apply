@@ -35,7 +35,6 @@ class MainScript {
 
       if (response.status === 401)
         window.open("https://instantapply.co", "_blank")
-
       if (response.status === 200) {
         this.data = await response.json()
         const {
