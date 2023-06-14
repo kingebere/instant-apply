@@ -10,7 +10,7 @@ class MainScript {
 	}
 
 	async submitJobDescription() {
-		await fetch("http://localhost:8000/submitJob", {
+		await fetch("https://instantapply.co/api/submitJob", {
 			method: "POST",
 			body:JSON.stringify({
                 jobDescription :this.jobDescription,
