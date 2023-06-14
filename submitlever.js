@@ -1,13 +1,24 @@
 class MainScript {
-	constructor() {
-		this.previousUrl = document.referrer;
-		this.regexPattern = /^https?:\/\/[\w.-]+\/[\w.-]+\/[\w.-]+\/apply$/;
+    constructor() {
+        //get previous url
+        this.previousUrl = document.referrer;
+        //regex for testing if u are from the apply page 
+        this.regexPattern = /^https?:\/\/[\w.-]+\/[\w.-]+\/[\w.-]+\/apply$/;
+        
 		this.configureApp(this.previousUrl);
 		this.jobDescription = null;
 	}
 
-	submitJobDescription(jobData) {
-            
+	async submitJobDescription() {
+		await fetch("http://localhost:8000/submitJob", {
+			method: "POST",
+			body:JSON.stringify({
+                jobDescription :this.jobDescription,
+            }),
+			headers: {
+				"Content-Type": "application/json",
+			},
+		});
 	}
 
 	async getDetails() {
@@ -16,11 +27,17 @@ class MainScript {
 		);
 	}
 
-	async configureApp(url) {
-		await this.getDetails();
-		if (this.regexPattern.test(url)) {
+    async configureApp(url) {
+        
+        //get job details stored in chrome storage when u submitted the form 
+        await this.getDetails();
+        
+        //test if user is coming from the apply page 
+        if (this.regexPattern.test(url)) {
+            
+            //submit the job details to server 
 			if (this.jobDescription) {
-				this.submitJobDescription(this.jobDescription)
+				this.submitJobDescription();
 			}
 		}
 	}

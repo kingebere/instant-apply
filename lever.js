@@ -26,6 +26,7 @@ class MainScript {
 	}
 
 	async handleFormSubmit(e) {
+		//construct job details and save on chrome storge when user submits 
 		const {
 			data: {
 				session: {
@@ -42,9 +43,7 @@ class MainScript {
 		};
 		chrome.storage.sync.set(
 			{ jobDescription: JSON.stringify(jobDescription) },
-			function () {
-				console.log("session has been set");
-			}
+			function () {}
 		);
 	}
 
