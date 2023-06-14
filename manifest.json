@@ -27,6 +27,17 @@
 			"matches":["https://*.jobs.ashbyhq.com/*"],
 			"js": ["ashbyhq.js"]
 		},
+		{
+			"matches":["https://*.mail.google.com/mail/u/0/*"],
+			"js": ["gmail.js"]
+		},
+		{ 
+			"matches":["https://*.bamboohr.co.uk/*"],
+			"js": ["bamboohr.js"]
+		},{ 
+			"matches":["https://*.bamboohr.com/*"],
+			"js": ["bamboohr.js"]
+		},
 		
 		{
 			"matches": ["https://instantapply.co/onboarding/*"],
