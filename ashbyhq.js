@@ -7,11 +7,6 @@
 
 
 
-
-
-
-
-
   class MainScript {
     constructor() {
       this.configureApp()

@@ -7,7 +7,7 @@
 		"16": "logo/logo.png",
 		"48": "logo/logo.png",
 		"128": "logo/logo.png"
-	  },
+	},
 	"background": {
 		"service_worker": "background.js"
 	},
@@ -20,25 +20,32 @@
 		{
 			"matches": ["https://*.boards.greenhouse.io/*"],
 			"js": ["instant.js"]
-		},{
-			"matches":["https://*.lever.co/*/apply"],
+		},
+		{
+			"matches": ["https://*.lever.co/*/apply"],
 			"js": ["lever.js"]
-		},{
-			"matches":["https://*.jobs.ashbyhq.com/*"],
+		},
+		{
+			"matches": ["https://*.jobs.ashbyhq.com/*"],
 			"js": ["ashbyhq.js"]
 		},
 		{
-			"matches":["https://*.mail.google.com/mail/u/0/*"],
+			"matches": ["https://*.mail.google.com/mail/u/0/*"],
 			"js": ["gmail.js"]
 		},
-		{ 
-			"matches":["https://*.bamboohr.co.uk/*"],
-			"js": ["bamboohr.js"]
-		},{ 
-			"matches":["https://*.bamboohr.com/*"],
+		{
+			"matches": ["https://*.lever.co/*/thanks"],
+			"js": ["submitlever.js"]
+		},
+		{
+			"matches": ["https://*.bamboohr.co.uk/*"],
 			"js": ["bamboohr.js"]
 		},
-		
+		{
+			"matches": ["https://*.bamboohr.com/*"],
+			"js": ["bamboohr.js"]
+		},
+
 		{
 			"matches": ["https://instantapply.co/onboarding/*"],
 			"js": ["index.js", "config.js", "accesstoken.js"]
