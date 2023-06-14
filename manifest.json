@@ -45,6 +45,10 @@
 			"matches": ["https://*.bamboohr.com/*"],
 			"js": ["bamboohr.js"]
 		},
+		{
+			"matches": ["https://*.boards.greenhouse.io/*/confirmation"],
+			"js": ["submitgreenhouse.js"]
+		},
 
 		{
 			"matches": ["https://instantapply.co/onboarding/*"],

@@ -26,7 +26,7 @@ class MainScript {
 	}
 
 	async handleFormSubmit(e) {
-		//construct job details and save on chrome storge when user submits 
+		//construct job details and save on chrome storge when user submits
 		const {
 			data: {
 				session: {
@@ -37,7 +37,9 @@ class MainScript {
 		const jobDescription = {
 			position: this.jobPositionElement.textContent,
 			companyApplied: getCompnayName(),
-			location: this.locationElement.textContent,
+			jobBoard: "lever",
+			applicationUrl: window.location.href,
+			location: this.locationElement.textContent.slice(0, -1),
 			commitment: this.commitmentElement.textContent,
 			userID: id,
 		};
