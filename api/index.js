@@ -60,6 +60,57 @@ app.post("/submitJob", async (req, res) => {
 	}
 });
 
+app.post("/count", async (req, res) => {
+	let supabaseUrl = process.env.URL;
+	let supabaseKey = process.env.KEY;
+	let supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+
+	const { userID } = req.body;
+
+
+	try {
+		const { data, error } = await supabaseClient.rpc("submit", {
+			user_id: userID,
+			increment_num: 1,
+		});
+
+		if (error) throw error;
+
+		res.status(201).json({
+			message: "Count updated successfully",
+		});
+	} catch (e) {
+		res.status(500).json({
+			message: "internal server error",
+		});
+	}
+});
+
+app.get("/count", async (req, res) => {
+	let supabaseUrl = process.env.URL;
+	let supabaseKey = process.env.KEY;
+	let supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+
+	const { userID } = req.query;
+
+	try {
+		const { data, error } = await supabaseClient
+			.from("profile")
+			.select("submitcount")
+			.eq("id", userID);
+		if (error) throw error;
+		if (data) {
+			res.status(200).send({
+				count: data[0].submitcount,
+			});
+		}
+	} catch (e) {
+		res.status(500).json({
+			message: "internal server error",
+		});
+	}
+});
+
 const port = 8000;
 app.listen(port, () => {
 	console.log("listening on port " + port);
