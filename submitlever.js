@@ -10,7 +10,7 @@ class MainScript {
 	}
 
 	async updateSubmitCountValue(userID) {
-		await fetch("http://localhost:8000/count", {
+		await fetch("https://instantapply.co/api/count", {
 			method: "POST",
 			body: JSON.stringify({
 				userID,

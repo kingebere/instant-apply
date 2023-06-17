@@ -95,7 +95,7 @@ class MainScript {
 
 	async fetchCount(userID) {
 		const response = await fetch(
-			`http://localhost:8000/count?userID=${userID}`
+			`https://instantapply.co/api/count?userID=${userID}`
 		);
 
 		if (response.status === 200) {
