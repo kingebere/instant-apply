@@ -1,7 +1,7 @@
 {
 	"name": "Instant Apply",
 	"description": "Autofill your Job Applications in one click",
-	"version": "0.0.0.1",
+	"version": "0.0.0.3",
 	"manifest_version": 3,
 	"icons": {
 		"16": "logo/logo.png",
@@ -48,7 +48,7 @@
 
 		{
 			"matches": ["https://instantapply.co/onboarding/*"],
-			"js": ["index.js", "config.js", "accesstoken.js"]
+			"js": ["index.js", "config.js", "accesstoken.js", "analytics.js"]
 		}
 	]
 }

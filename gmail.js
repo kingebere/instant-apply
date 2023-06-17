@@ -142,4 +142,4 @@ class MainScript {
   }
 }
 
-new MainScript()
+new MainScript();

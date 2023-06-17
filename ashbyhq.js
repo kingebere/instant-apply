@@ -150,5 +150,5 @@
     }
   }
   
-  new MainScript()
+  new MainScript();
   
