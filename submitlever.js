@@ -10,7 +10,7 @@ class MainScript {
 	}
 
 	async updateSubmitCountValue(userID) {
-		await fetch("https://instantapply.co/api/count", {
+		await fetch("https://instantapply.co/api/updatecount", {
 			method: "POST",
 			body: JSON.stringify({
 				userID,
@@ -22,7 +22,7 @@ class MainScript {
 	}
 
 	async submitJobDescription() {
-		await fetch("https://instantapply.co/api/submitJob", {
+		const response = 	await fetch("https://instantapply.co/api/submitJob", {
 			method: "POST",
 			body: JSON.stringify({
 				jobDescription: this.jobDescription,
@@ -30,9 +30,11 @@ class MainScript {
 			headers: {
 				"Content-Type": "application/json",
 			},
-		});
-
-		this.updateSubmitCountValue(this.jobDescription.userID);
+	});
+		
+		if (response.status === 200) { 
+			this.updateSubmitCountValue(this.jobDescription.userID);
+		}
 	}
 
 	async getDetails() {
