@@ -3,7 +3,7 @@ function getCompnayName() {
 
 	return this.presentWindowUrl.split("/")[3];
 }
-class MainScript {
+class greenhouseMainScript {
 	constructor() {
 		this.configureApp();
 		this.btn = null;
@@ -136,16 +136,7 @@ class MainScript {
 		);
 	}
 
-	//add event listener for when page loads
-	configureApp() {
-		if (
-			/^https:\/\/boards\.greenhouse\.io\/\w+\/jobs\/\d+#[a-zA-Z]+$/.test(
-				window.location.href
-			)
-		) {
-			window.onload = this.addPopUpButtonToPage();
-		}
-	}
+	
 
 	updateNamePhoneEmail(firstName, lastName, email, phone) {
 		this.firstNameElement.value = firstName && firstName;
@@ -296,6 +287,17 @@ class MainScript {
 
 		dec.dispatchEvent(event);
 	}
+
+	//add event listener for when page loads
+	configureApp() {
+		if (
+			/^https:\/\/boards\.greenhouse\.io\/\w+\/jobs\/\d+#[a-zA-Z]+$/.test(
+				window.location.href
+			)
+		) {
+			window.onload = this.addPopUpButtonToPage();
+		}
+	}
 }
 
-new MainScript();
+new greenhouseMainScript();

@@ -1,4 +1,4 @@
-class MainScript {
+class leverMain {
     constructor() {
         //get previous url
         this.previousUrl = document.referrer;
@@ -43,4 +43,4 @@ class MainScript {
 	}
 }
 
-new MainScript();
+new leverMain();

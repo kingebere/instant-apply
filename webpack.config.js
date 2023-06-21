@@ -10,6 +10,7 @@ module.exports = {
     ashbyhq: './ashbyhq.js',
     bamboohr: './bamboohr.js',
     submitlever: './submitlever.js',
+    submitgreenhouse: './submitgreenhouse.js',
     accesstoken: './accesstoken.js',
     // Add other entry points for each content script
   },
