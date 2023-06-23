@@ -1,10 +1,10 @@
-class MainScript {
-	constructor() {
-		//get previous url
-		this.previousUrl = document.referrer;
-		//regex for testing if u are from the apply page
-		this.regexPattern = /^https?:\/\/[\w.-]+\/[\w.-]+\/[\w.-]+\/apply$/;
-
+class leverMain {
+    constructor() {
+        //get previous url
+        this.previousUrl = document.referrer;
+        //regex for testing if u are from the apply page 
+        this.regexPattern = /^https?:\/\/[\w.-]+\/[\w.-]+\/[\w.-]+\/apply$/;
+        
 		this.configureApp(this.previousUrl);
 		this.jobDescription = null;
 	}
@@ -57,4 +57,4 @@ class MainScript {
 	}
 }
 
-new MainScript();
+new leverMain();

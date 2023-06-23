@@ -1,4 +1,4 @@
-class Main {
+class greenhouseMain {
 	constructor() {
 		//get previous url
 		this.previousUrl = document.referrer;
@@ -59,4 +59,4 @@ class Main {
 	}
 }
 
-new Main();
+new greenhouseMain();
