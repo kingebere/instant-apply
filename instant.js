@@ -48,58 +48,84 @@ class greenhouseMainScript {
 		);
 	}
 
+
+	async fetchCount(userID) {
+		const response = await fetch(
+			`https://instantapply.co/api/count?userID=${userID}`
+		);
+
+		if (response.status === 200) {
+			const { count } = await response.json();
+			return count;
+		}
+		return 0;
+	}
+
 	//handle when popbutton is clicked
 	async handlePopUpbuttonClicked() {
 		const session = (await chrome.storage.sync.get("session"))["session"];
 
 		if (session) {
-			const response = await fetch("https://instantapply.co/api/getUser", {
-				method: "POST",
-				mode: "cors",
-				body: JSON.stringify({
-					session,
-				}),
-				headers: {
-					"Content-Type": "application/json",
-				},
-			});
-
-			if (response.status === 401)
-				window.open("https://instantapply.co", "_blank");
-			if (response.status === 200) {
-				this.data = await response.json();
-				const {
-					data: {
-						lastname,
-						linkedin,
-						gender,
-						youlatino,
-						firstname,
-						phone,
-						resume_email,
-						resume_url,
-						disabilitystatus,
-						veteranstatus,
-						github,
-						filename,
+			const {
+				data: {
+					session: {
+						user: { id },
 					},
-				} = this.data;
-
-				this.updateNamePhoneEmail(firstname, lastname, resume_email, phone);
-				// Call the function to update the Github input value
-				this.updateGithubInputValue(github);
-				// Call the function to update the Linkedin input value
-				this.updateLinkedinInputValue(linkedin);
-				// Call the function to update the DOM
-				this.updateGender(gender);
-				// Call the function to update the DOM
-				this.youLatino(youlatino);
-				// Call the function to update the DOM
-				this.updateVeteranStatus(veteranstatus);
-				// Call the function to update the DOM
-				this.disabilityStatus(disabilitystatus);
-				this.uploadResume(resume_url, filename);
+				},
+			} = JSON.parse(session);
+			const count = await this.fetchCount(id);
+			if (count < 50) {
+				const response = await fetch("https://instantapply.co/api/getUser", {
+					method: "POST",
+					mode: "cors",
+					body: JSON.stringify({
+						session,
+					}),
+					headers: {
+						"Content-Type": "application/json",
+					},
+				});
+	
+				if (response.status === 401)
+					window.open("https://instantapply.co", "_blank");
+				if (response.status === 200) {
+					this.data = await response.json();
+					const {
+						data: {
+							lastname,
+							linkedin,
+							gender,
+							youlatino,
+							firstname,
+							phone,
+							resume_email,
+							resume_url,
+							disabilitystatus,
+							veteranstatus,
+							github,
+							filename,
+						},
+					} = this.data;
+	
+					this.updateNamePhoneEmail(firstname, lastname, resume_email, phone);
+					// Call the function to update the Github input value
+					this.updateGithubInputValue(github);
+					// Call the function to update the Linkedin input value
+					this.updateLinkedinInputValue(linkedin);
+					// Call the function to update the DOM
+					this.updateGender(gender);
+					// Call the function to update the DOM
+					this.youLatino(youlatino);
+					// Call the function to update the DOM
+					this.updateVeteranStatus(veteranstatus);
+					// Call the function to update the DOM
+					this.disabilityStatus(disabilitystatus);
+					this.uploadResume(resume_url, filename);
+				}
+			} else {
+				alert('gone above your click limit')
 			}
+
 		} else window.open("https://instantapply.co", "_blank");
 	}
 

@@ -93,55 +93,72 @@ class leverMainScript {
     dec.dispatchEvent(event)
   }
 
-  async handlePopUpbuttonClicked() {
-    const session = (await chrome.storage.sync.get("session"))["session"]
+	async fetchCount(userID) {
+		const response = await fetch(
+			`https://instantapply.co/api/count?userID=${userID}`
+		);
 
-    if (session) {
-      const response = await fetch("https://instantapply.co/api/getUser", {
-        method: "POST",
-        mode: "cors",
-        body: JSON.stringify({
-          session,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
+		if (response.status === 200) {
+			const { count } = await response.json();
+			return count;
+		}
+		return 0;
+	}
 
-      if (response.status === 401) {
-        window.open("https://instantapply.co", "_blank")
-      }
+	async handlePopUpbuttonClicked() {
+		const session = (await chrome.storage.sync.get("session"))["session"];
+		if (session) {
+			const {
+				data: {
+					session: {
+						user: { id },
+					},
+				},
+			} = JSON.parse(session);
+			const count = await this.fetchCount(id);
+			if (count < 50) {
+				const response = await fetch("https://instantapply.co/api/getUser", {
+					method: "POST",
+					mode: "cors",
+					body: JSON.stringify({
+						session,
+					}),
+					headers: {
+						"Content-Type": "application/json",
+					},
+				});
 
-      if (response.status === 200) {
-        this.data = await response.json()
+				if (response.status === 401)
+					window.open("https://instantapply.co", "_blank");
 
-        const {
-          data: {
-            lastname,
-            linkedin,
-            firstname,
-            phone,
-            resume_email,
-            resume_url,
-            filename,
-            currentCompany,
-          },
-        } = this.data
-
-        this.fillnameEmailCompanyLinkedIn(
-          `${firstname} ${lastname}`,
-          resume_email,
-          phone,
-          currentCompany,
-          linkedin
-        )
-
-        this.uploadResume(resume_url, filename)
-      }
-    } else {
-      window.open("https://instantapply.co", "_blank")
-    }
-  }
+				if (response.status === 200) {
+					this.data = await response.json();
+					const {
+						data: {
+							lastname,
+							linkedin,
+							firstname,
+							phone,
+							resume_email,
+							resume_url,
+							filename,
+							currentCompany,
+						},
+					} = this.data;
+					this.fillnameEmailCompanyLinkedIn(
+						`${firstname} ${lastname}`,
+						resume_email,
+						phone,
+						currentCompany,
+						linkedin
+					);
+					this.uploadResume(resume_url, filename);
+				}
+			} else {
+				alert("your free clicks are done");
+			}
+		} else window.open("https://instantapply.co", "_blank");
+	}
 
   addPopUpButtonToPage() {
     var btn = document.createElement("div")
