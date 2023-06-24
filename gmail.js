@@ -31,7 +31,7 @@ class gmailMainScript {
     emailElement.value = gmailRecipientEmail && gmailRecipientEmail
     emailElementField.value = gmailRecipientEmail && gmailRecipientEmail
 
-// Get the first div element
+ // Get the first div element
 const targetDiv = document.querySelector('div.Am.Al.editable.LW-avf.tS-tW');
 
 // Find the first child <div> element within the parent
@@ -45,12 +45,10 @@ const ancestorElement = brTag.parentElement;
 
 // Create a <pre> element
 const preTag = document.createElement('pre');
+preTag.style.whiteSpace = 'pre-wrap'; // Preserve line breaks and spaces
 
-// Create a text node and add the content gmailContent
-const newText = document.createTextNode(gmailContent);
-
-// Append the text node to the <pre> tag
-preTag.appendChild(newText);
+// Set the text content of the <pre> tag to the desired text
+preTag.textContent = gmailContent;
 
 // Replace the <br> tag with the <pre> tag
 ancestorElement.replaceChild(preTag, brTag);
