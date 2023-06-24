@@ -31,24 +31,30 @@ class gmailMainScript {
     emailElement.value = gmailRecipientEmail && gmailRecipientEmail
     emailElementField.value = gmailRecipientEmail && gmailRecipientEmail
 
- // Get the first div element
- const targetDiv = document.querySelector('div.Am.Al.editable.LW-avf.tS-tW');
+// Get the first div element
+const targetDiv = document.querySelector('div.Am.Al.editable.LW-avf.tS-tW');
 
- // Find the first child <div> element within the parent
- const firstDiv = targetDiv.querySelector('div');
- 
- // Find the <br> tag inside the div
- const brTag = firstDiv.querySelector('br');
- 
- // Find the nearest parent of the <br> tag 
- const ancestorElement = brTag.parentElement;
- 
- 
- // Create a text node and add gmailcontent into it
- const newText = document.createTextNode(gmailContent);
- 
- // Replace the <br> tag with the gmailcontent
- ancestorElement.replaceChild(newText, brTag);
+// Find the first child <div> element within the parent
+const firstDiv = targetDiv.querySelector('div');
+
+// Find the <br> tag inside the div
+const brTag = firstDiv.querySelector('br');
+
+// Find the nearest parent of the <br> tag
+const ancestorElement = brTag.parentElement;
+
+// Create a <pre> element
+const preTag = document.createElement('pre');
+
+// Create a text node and add the content gmailContent
+const newText = document.createTextNode(gmailContent);
+
+// Append the text node to the <pre> tag
+preTag.appendChild(newText);
+
+// Replace the <br> tag with the <pre> tag
+ancestorElement.replaceChild(preTag, brTag);
+
 
   
   }
