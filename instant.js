@@ -193,7 +193,7 @@ class greenhouseMainScript {
 				},
 			} = JSON.parse(session);
 			const count = await this.fetchCount(id);
-			if (count < 50) {
+			if (count < 40) {
 				const response = await fetch("https://instantapply.co/api/getUser", {
 					method: "POST",
 					mode: "cors",
