@@ -61,6 +61,125 @@ class greenhouseMainScript {
 		return 0;
 	}
 
+	removeSubscribeModal() {
+		const modalContainer = document.body.querySelector(".modal-container");
+		document.body.removeChild(modalContainer);
+	}
+
+	addSubscribeModal() {
+		// Create the modal container
+		var modalContainer = document.createElement("div");
+		modalContainer.className = "modal-container";
+		modalContainer.setAttribute(
+			"style",
+			`position: fixed;
+		z-index: 9999;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		display:flex;
+		z-indeX:100000;
+		background-color: rgba(0, 0, 0, 0.5);
+		 justify-content: center;
+		 align-items: center;`
+		);
+
+		// Create the modal content
+		var modalContent = document.createElement("div");
+		modalContent.setAttribute(
+			"style",
+			` background-color: #fefefe;
+			position:relative;
+		display:flex;
+		flex-direction: column;
+		align-items:center;
+		padding:1em;
+		border: 1px solid #888;
+		border-radius:.5em;
+		height:300px;
+		width: 90%;
+		max-width: 500px;`
+		);
+
+		// Create the close button
+		var closeButton = document.createElement("span");
+		closeButton.innerHTML = "&times;";
+		closeButton.className = "close-icon";
+
+		closeButton.setAttribute(
+			"style",
+			`
+		color: #aaa;
+		position: absolute;
+		right:2%;
+		font-size: 28px;
+		font-weight: bold;
+		cursor: pointer;
+		`
+		);
+
+		// Create the modal title
+		var modalTitle = document.createElement("h2");
+		modalTitle.textContent = "Upgrade for Limitless Auto fills";
+		modalTitle.style.marginBottom = "0";
+
+		modalTitle.setAttribute(
+			"style",
+			`
+		text-align:center;
+		margin:1em .5em 0 0;
+		color: #666;
+		font-size: 28px;
+		font-weight: bold;
+		`
+		);
+
+		// Create the modal body
+		var modalBody = document.createElement("a");
+		modalBody.textContent = "Subscribe Now to get Unlimited Fills";
+		modalBody.href = "https://instantapply.co/";
+
+		modalBody.setAttribute(
+			"style",
+			`
+		margin:0;
+		color:blue;
+		font-size: 18px;
+		text-decoration:underline;
+		`
+		);
+
+		var img = document.createElement("img");
+		img.src = "https://instantapply.co/assets/images/subscribe.png";
+
+		img.setAttribute(
+			"style",
+			`
+		width:150px;
+		height:120px;
+		display:inline-block;
+		marign: 0 auto;
+
+		`
+		);
+
+		// Append the elements to the modal content
+		modalContent.appendChild(closeButton);
+		modalContent.appendChild(modalTitle);
+		modalContent.appendChild(img);
+		modalContent.appendChild(modalBody);
+
+		// Append the modal content to the modal container
+		modalContainer.appendChild(modalContent);
+
+		// Append the modal container to the document body
+		document.body.appendChild(modalContainer);
+
+		this.configureElementToRemoveModal(".modal-container");
+		this.configureElementToRemoveModal(".close-icon");
+	}
+
 	//handle when popbutton is clicked
 	async handlePopUpbuttonClicked() {
 		const session = (await chrome.storage.sync.get("session"))["session"];
@@ -123,10 +242,16 @@ class greenhouseMainScript {
 					this.uploadResume(resume_url, filename);
 				}
 			} else {
-				alert('gone above your click limit')
+				this.addSubscribeModal();
 			}
 
 		} else window.open("https://instantapply.co", "_blank");
+	}
+
+	configureElementToRemoveModal(className) {
+		document
+			.querySelector(className)
+			.addEventListener("click", this.removeSubscribeModal.bind(this));
 	}
 
 	addPopUpButtonToPage() {
