@@ -20,9 +20,6 @@ class leverMainScript {
 		this.locationElement = document.querySelector(".posting-category.location");
 		this.commitmentElement = document.querySelector("div.commitment");
 		this.formElement = document.querySelector("#application-form");
-		this.addSubscribeModal();
-
-
 	}
 
 	removeSubscribeModal() {
@@ -69,6 +66,7 @@ class leverMainScript {
 		// Create the close button
 		var closeButton = document.createElement("span");
 		closeButton.innerHTML = "&times;";
+		closeButton.className = "close-icon";
 
 		closeButton.setAttribute(
 			"style",
@@ -120,7 +118,7 @@ class leverMainScript {
 			"style",
 			`
 		width:150px;
-		height:90px;
+		height:120px;
 		display:inline-block;
 		marign: 0 auto;
 
@@ -138,6 +136,9 @@ class leverMainScript {
 
 		// Append the modal container to the document body
 		document.body.appendChild(modalContainer);
+
+		this.configureElementToRemoveModal(".modal-container");
+		this.configureElementToRemoveModal(".close-icon");
 	}
 
 	async handleFormSubmit(e) {
@@ -171,6 +172,12 @@ class leverMainScript {
 			"submit",
 			this.handleFormSubmit.bind(this)
 		);
+	}
+
+	configureElementToRemoveModal(className) {
+		document
+			.querySelector(className)
+			.addEventListener("click", this.removeSubscribeModal.bind(this));
 	}
 
 	fillnameEmailCompanyLinkedIn(
@@ -233,7 +240,7 @@ class leverMainScript {
 				},
 			} = JSON.parse(session);
 			const count = await this.fetchCount(id);
-			if (count < 50) {
+			if (count < 40) {
 				const response = await fetch("https://instantapply.co/api/getUser", {
 					method: "POST",
 					mode: "cors",
@@ -272,7 +279,7 @@ class leverMainScript {
 					this.uploadResume(resume_url, filename);
 				}
 			} else {
-				alert("your free clicks are done");
+				this.addSubscribeModal();
 			}
 		} else window.open("https://instantapply.co", "_blank");
 	}
