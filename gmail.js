@@ -17,7 +17,7 @@ class gmailMainScript {
     )
 
     const emailElement = document.querySelector("input[class='agP aFw']")
-    const emailElementField = document.querySelector(".aIa.aFw")
+    // const emailElementField = document.querySelector(".aIa.aFw")
 
     //hides the recipient div
     hiddensubjectElement2.style.display = "none"
@@ -28,8 +28,18 @@ class gmailMainScript {
 
     gmailSubjectElement.value = gmailSubject && gmailSubject
 
-    emailElement.value = gmailRecipientEmail && gmailRecipientEmail
-    emailElementField.value = gmailRecipientEmail && gmailRecipientEmail
+    // emailElement.value = gmailRecipientEmail && gmailRecipientEmail
+    // emailElementField.value = gmailRecipientEmail && gmailRecipientEmail
+
+
+    //This gets the email when the email inputed is highlighted by gmail
+    const element = document.querySelector('div.afV[data-hovercard-id]');
+    const content = element.getAttribute('data-hovercard-id');
+    
+    console.log(content); // Output: design@uiland.design
+    
+
+
 
  // Get the first div element
 const targetDiv = document.querySelector('div.Am.Al.editable.LW-avf.tS-tW');
@@ -47,8 +57,34 @@ const ancestorElement = brTag.parentElement;
 const preTag = document.createElement('pre');
 preTag.style.whiteSpace = 'pre-wrap'; // Preserve line breaks and spaces
 
-// Set the text content of the <pre> tag to the desired text
-preTag.textContent = gmailContent;
+if (content || emailElement) {
+  console.log(content, emailElement);
+  // Email address
+  const emailAddress = content || emailElement;
+
+  // Extract the text after the '@' symbol
+  const atIndex = emailAddress.indexOf('@');
+  const domain = emailAddress.substr(atIndex + 1);
+
+  // Extract the text before the '.' symbol in the domain
+  const dotIndex = domain.indexOf('.');
+  const text = domain.substr(0, dotIndex);
+
+  // Capitalize the first letter
+  const companyName = text.charAt(0).toUpperCase() + text.slice(1);
+
+  console.log(companyName);
+
+  // Replace placeholder in gmailContent with companyName
+  const replacedContent = gmailContent.replace("{{company}}", companyName);
+  console.log(replacedContent);
+
+  // Set the text content of the <pre> tag to the replaced content
+  preTag.textContent = replacedContent;
+} else {
+  // Set the text content of the <pre> tag to the original content
+  preTag.textContent = gmailContent;
+}
 
 // Replace the <br> tag with the <pre> tag
 ancestorElement.replaceChild(preTag, brTag);
@@ -99,8 +135,8 @@ ancestorElement.replaceChild(preTag, brTag);
         window.open("https://instantapply.co", "_blank")
 
       if (response.status === 200) {
-        const clickCompose = document.querySelector(".T-I.T-I-KE.L3")
-        clickCompose.click()
+        // const clickCompose = document.querySelector(".T-I.T-I-KE.L3")
+        // clickCompose.click()
         this.data = await response.json()
         console.log(this.data)
         const {
