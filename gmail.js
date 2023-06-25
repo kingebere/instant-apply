@@ -50,7 +50,7 @@ class gmailMainScript {
     console.log(content) // Output: design@uiland.design
 
     // Get the first div element
-    const targetDiv = document.querySelector("div.Am.Al.editable.LW-avf.tS-tW")
+    let targetDiv = document.querySelector("div.Am.Al.editable.LW-avf.tS-tW")
 
     // Find the first child <div> element within the parent
     const firstDiv = targetDiv.querySelector("div")
@@ -89,8 +89,34 @@ class gmailMainScript {
       const replacedContent = gmailContent.replace("{{company}}", companyName)
       console.log(replacedContent)
 
-      // Set the text content of the <pre> tag to the replaced content
+      function generatePixelTrackingUrl(recipientEmail) {
+        const baseUrl = "https://instantapply.co/api/tracking.gif"
+        const uniqueUrl = `${baseUrl}?email=${encodeURIComponent(
+          recipientEmail
+        )}`
+
+        return uniqueUrl
+      }
+
+      const recipientEmail = emailAddress
+      const pixelTrackingUrl = generatePixelTrackingUrl(recipientEmail)
+
+      // Assuming you have the pixelTrackingUrl generated
+
+      // Create a <img> element for the tracking pixel
+      const trackingPixel = document.createElement("img")
+      trackingPixel.src = pixelTrackingUrl
+      trackingPixel.width = 1
+      trackingPixel.height = 1
+      trackingPixel.style.display = "none"
+
+      // Send the email with the emailContent
+
+      // Set the text content of the <pre> tag to the replaced content and include the pixel tracking URL in the email content
       preTag.textContent = replacedContent
+
+      // Append the tracking pixel to the parent container
+      targetDiv.appendChild(trackingPixel)
     } else {
       // Set the text content of the <pre> tag to the original content
       preTag.textContent = gmailContent
@@ -170,36 +196,36 @@ class gmailMainScript {
     const targetUrl = "https://mail.google.com/mail/u/0/#inbox?compose=new"
 
     if (currentUrl === targetUrl) {
-      var btn = document.createElement("div");
-      btn.classList.add("action_button");
-      
-      var img = document.createElement("img");
-      img.src = "https://instantapply.co/assets/images/instantapply-logo.svg";
-      img.style.width = "24px";
-      img.style.height = "24px";
-      btn.appendChild(img);
-      
+      var btn = document.createElement("div")
+      btn.classList.add("action_button")
+
+      var img = document.createElement("img")
+      img.src = "https://instantapply.co/assets/images/instantapply-logo.svg"
+      img.style.width = "24px"
+      img.style.height = "24px"
+      btn.appendChild(img)
+
       // Styling the button
-      img.style.top = "10%";
-      img.style.right = "7%";
-      img.style.borderRadius = "8px";
-      img.style.backgroundColor = "#ede2ff";
-      img.style.padding = "6px";
-      img.style.marginLeft = "6px";
-      img.style.zIndex = "999";
-      btn.style.cursor = "pointer";
-      
+      img.style.top = "10%"
+      img.style.right = "7%"
+      img.style.borderRadius = "8px"
+      img.style.backgroundColor = "#ede2ff"
+      img.style.padding = "6px"
+      img.style.marginLeft = "6px"
+      img.style.zIndex = "999"
+      btn.style.cursor = "pointer"
+
       // Find the target element to append the button
-      var targetElement = document.querySelector("tr.btC");
-      var td = document.createElement("td");
-      td.appendChild(btn);
-      
+      var targetElement = document.querySelector("tr.btC")
+      var td = document.createElement("td")
+      td.appendChild(btn)
+
       // Get the first child (first td) in the row
-      var firstChild = targetElement.firstElementChild;
-      
+      var firstChild = targetElement.firstElementChild
+
       // Insert the new td after the first child
-      firstChild.insertAdjacentElement("afterend", td);
-      
+      firstChild.insertAdjacentElement("afterend", td)
+
       this.btn = td
       this.configurePopUpButton()
     }
