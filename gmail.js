@@ -68,6 +68,8 @@ const ancestorElement = brTag.parentElement;
 // Create a <pre> element
 const preTag = document.createElement('pre');
 preTag.style.whiteSpace = 'pre-wrap'; // Preserve line breaks and spaces
+preTag.style.font='small/1.5 Arial,Helvetica,sans-serif';
+preTag.style.letterSpacing='normal';
 
 if (content || emailElement) {
   console.log(content, emailElement);
