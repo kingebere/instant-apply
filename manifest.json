@@ -15,7 +15,8 @@
 		"default_title": "Instant Apply",
 		"default_popup": "background.html"
 	},
-	"permissions": ["storage"],
+	"permissions": ["storage","tabs"],
+	"host_permissions": ["<all_urls>"],
 	"content_scripts": [
 		{
 			"matches": ["https://*.boards.greenhouse.io/*"],

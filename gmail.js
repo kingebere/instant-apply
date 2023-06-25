@@ -3,6 +3,18 @@ class gmailMainScript {
     this.configureApp()
     this.btn = null
     this.token = null
+
+        // Listen for messages from the background script
+        chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+          if (message.url) {
+            // Perform actions based on the URL change
+            const url = message.url;
+            console.log('Performing actions for URL:', url);
+    
+            // Call a function or trigger the desired action
+            this.addPopUpButtonToPage();
+          }
+        });
   }
 
   fillnameEmailCompanyLinkedIn(
@@ -159,30 +171,37 @@ ancestorElement.replaceChild(preTag, brTag);
   }
 
   addPopUpButtonToPage() {
-    var btn = document.createElement("div")
-    btn.classList.add("action_button")
-    var img = document.createElement("img")
-    img.src = "https://instantapply.co/assets/images/instantapply-logo.svg"
-    img.style.width = "50px"
-    img.style.height = "50px"
-    btn.appendChild(img)
-    //styling the button
-    img.style.position = "fixed"
-    img.style.top = "10%"
-    img.style.right = "7%"
-    img.style.borderRadius = "8px"
-    img.style.backgroundColor = "#ede2ff"
-    img.style.padding = "10px"
-    img.style.zIndex = "999"
-    btn.style.cursor = "pointer"
-    document.body.appendChild(btn)
-    this.btn = btn
-    this.configurePopUpButton()
+    const currentUrl = window.location.href;
+    const targetUrl = "https://mail.google.com/mail/u/0/#inbox?compose=new";
+    
+    if (currentUrl === targetUrl) {
+      var btn = document.createElement("div");
+      btn.classList.add("action_button");
+      var img = document.createElement("img");
+      img.src = "https://instantapply.co/assets/images/instantapply-logo.svg";
+      img.style.width = "50px";
+      img.style.height = "50px";
+      btn.appendChild(img);
+      //styling the button
+      img.style.position = "fixed";
+      img.style.top = "10%";
+      img.style.right = "7%";
+      img.style.borderRadius = "8px";
+      img.style.backgroundColor = "#ede2ff";
+      img.style.padding = "10px";
+      img.style.zIndex = "999";
+      btn.style.cursor = "pointer";
+      document.body.appendChild(btn);
+      this.btn = btn;
+      this.configurePopUpButton();
+    }
   }
+  
 
   configurePopUpButton() {
     this.btn.addEventListener("click", this.handlePopUpbuttonClicked.bind(this))
   }
+
 
   configureApp() {
     window.addEventListener("load", () => {
