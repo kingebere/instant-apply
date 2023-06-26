@@ -4,6 +4,11 @@ function getCompanyName() {
 	return this.presentWindowUrl.split("/")[3];
 }
 
+function getCompanyID() {
+	this.presentWindowUrl = window.location.href;
+	return this.presentWindowUrl.split("/")[4];
+}
+
 class leverMainScript {
 	constructor() {
 		this.configureApp();
@@ -25,8 +30,13 @@ class leverMainScript {
 	}
 
 	async handleAiButtonClicked() {
+		const name = getCompanyName();
+		const id = getCompanyID();
+
 		try {
-			const response = await fetch("http://localhost:8000/description");
+			const response = await fetch(
+				`https://instantapply.co/description?name=${name}&id=${id}`
+			);
 
 			if (response.status == 200) {
 				const data = await response.json();
@@ -48,7 +58,7 @@ class leverMainScript {
 					});
 
 					try {
-						const response = await fetch("http://localhost:3000/api/content", {
+						const response = await fetch("https://instantapply.co/api/content", {
 							method: "POST",
 							body: JSON.stringify({
 								session,

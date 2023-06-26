@@ -231,16 +231,16 @@ app.post("/content", async (req, res) => {
 });
 
 app.get("/description", async (req, res) => {
-	const company = "metabase";
-	const id = "5bf3233d-a162-47b2-8d85-d3650b176c6e";
+	const { name, id } = req.query;
+
 	// Usage example
-	const webpageURL = `https://jobs.lever.co/${company}/${id}`;
+	const webpageURL = `https://jobs.lever.co/${name}/${id}`;
 	const elementSelector = ".section-wrapper .section:nth-child(3) ul"; // CSS selector of the HTML element you want to scrape
 	scrape(webpageURL, elementSelector)
 		.then((content) => {
 			res.status(200).json({
-				jobRequirement: content
-			})
+				jobRequirement: content,
+			});
 			// Use the scraped content as needed
 		})
 		.catch((error) => {
