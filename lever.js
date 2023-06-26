@@ -35,7 +35,7 @@ class leverMainScript {
 
 		try {
 			const response = await fetch(
-				`https://instantapply.co/description?name=${name}&id=${id}`
+				`https://instantapply.co/api/description?name=${name}&id=${id}`
 			);
 
 			if (response.status == 200) {
