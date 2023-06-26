@@ -5,6 +5,7 @@ const cors = require("cors");
 const morgan = require("morgan");
 const axios = require("axios");
 const pdf = require("pdf-parse");
+const scrape = require("./util");
 
 const app = express();
 
@@ -231,6 +232,24 @@ app.post("/content", async (req, res) => {
 			message: "internal server error",
 		});
 	}
+});
+
+api.get('/description', async (req, res) => {
+	
+// Usage example
+const webpageURL = `https://jobs.lever.co/${company}/${id}`;
+const elementSelector = '.section-wrapper .section:nth-child(3) ul'; // CSS selector of the HTML element you want to scrape
+  scrape(webpageURL, elementSelector)
+  .then(content => {
+    console.log('Scraped Content:', content);
+    // Use the scraped content as needed
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    // Handle the error
+  });
+
+
 });
 
 const port = 8000;

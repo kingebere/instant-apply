@@ -493,9 +493,8 @@ class greenhouseMainScript {
 			});
 
 			try {
-				const response = await fetch("https://instantapply.co/api/content", {
+				const response = await fetch("http://localhost:3000/api/content", {
 					method: "POST",
-
 					body: JSON.stringify({
 						session,
 						jobDescription,
