@@ -18,7 +18,7 @@
 	"permissions": ["storage"],
 	"content_scripts": [
 		{
-			"matches": ["https://*.boards.greenhouse.io/*"],
+			"matches": ["https://*.boards.greenhouse.io/*"], 
 			"js": ["instant.js"]
 		},
 		{
