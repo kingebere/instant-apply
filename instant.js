@@ -48,7 +48,6 @@ class greenhouseMainScript {
 		);
 	}
 
-
 	async fetchCount(userID) {
 		const response = await fetch(
 			`https://instantapply.co/api/count?userID=${userID}`
@@ -193,7 +192,7 @@ class greenhouseMainScript {
 				},
 			} = JSON.parse(session);
 			const count = await this.fetchCount(id);
-			if (count < 50) {
+			if (count < 40) {
 				const response = await fetch("https://instantapply.co/api/getUser", {
 					method: "POST",
 					mode: "cors",
@@ -204,7 +203,7 @@ class greenhouseMainScript {
 						"Content-Type": "application/json",
 					},
 				});
-	
+
 				if (response.status === 401)
 					window.open("https://instantapply.co", "_blank");
 				if (response.status === 200) {
@@ -225,7 +224,7 @@ class greenhouseMainScript {
 							filename,
 						},
 					} = this.data;
-	
+
 					this.updateNamePhoneEmail(firstname, lastname, resume_email, phone);
 					// Call the function to update the Github input value
 					this.updateGithubInputValue(github);
@@ -244,14 +243,13 @@ class greenhouseMainScript {
 			} else {
 				this.addSubscribeModal();
 			}
-
 		} else window.open("https://instantapply.co", "_blank");
 	}
 
 	configureElementToRemoveModal(className) {
 		document
 			.querySelector(className)
-			.addEventListener("click", this.removeSubscribeModal.bind(this));
+			?.addEventListener("click", this.removeSubscribeModal.bind(this));
 	}
 
 	addPopUpButtonToPage() {
@@ -277,17 +275,17 @@ class greenhouseMainScript {
 		document
 			.querySelector("#submit_app")
 			.addEventListener("click", this.handleFormSubmit.bind(this));
+
+		this.addAiButton();
 	}
 
 	//add event listener to popup button
 	configurePopUpButton() {
-		this.btn.addEventListener(
+		this.btn?.addEventListener(
 			"click",
 			this.handlePopUpbuttonClicked.bind(this)
 		);
 	}
-
-	
 
 	updateNamePhoneEmail(firstName, lastName, email, phone) {
 		this.firstNameElement.value = firstName && firstName;
@@ -439,10 +437,96 @@ class greenhouseMainScript {
 		dec.dispatchEvent(event);
 	}
 
+	addAiButton() {
+		const button = document.createElement("div");
+		button.className = "ai-button";
+		button.textContent = "Instant Cover-Letter?";
+
+		button.setAttribute(
+			"style",
+			`
+        padding: 1.5em 1EM;
+		 margin:1em 0;
+		 display: inline-block;
+		 background-color:blue;
+		 color:white;
+		 border-radius:.5em;
+		 font-weight:medium;
+		 font-size:14px;
+		 cursor:pointer;
+		`
+		);
+
+		const textArea = document.querySelector(
+			"#job_application_answers_attributes_4_priority"
+		);
+
+		if (textArea) {
+			textArea.setAttribute(
+				"style",
+				`
+			position:relative;
+			`
+			);
+			textArea.parentNode.appendChild(button);
+		}
+		this.configureAiButtonClick();
+	}
+
+	async handleAiButtonClicked() {
+		const session = (await chrome.storage.sync.get("session"))["session"];
+
+		if (session) {
+			const {
+				data: {
+					session: {
+						user: { id },
+					},
+				},
+			} = JSON.parse(session);
+
+			const jobDescription = JSON.stringify({
+				jobTitle: this.jobPositionElement.textContent,
+				jobRequirements: document
+					.querySelector("#content p:nth-of-type(7)+ul")
+					.textContent.trim(),
+			});
+
+			try {
+				const response = await fetch("https://instantapply.co/api/content", {
+					method: "POST",
+					body: JSON.stringify({
+						session,
+						jobDescription,
+					}),
+					headers: {
+						"Content-Type": "application/json",
+					},
+				});
+
+				if (response.status === 200) {
+					const data = await response.json();
+					document.querySelector(
+						"#job_application_answers_attributes_4_text_value"
+					).value = data.message;
+				}
+			} catch (e) {
+				alert("An error occurred");
+				console.log(e);
+			}
+		} else window.open("https://instantapply.co", "_blank");
+	}
+
+	configureAiButtonClick() {
+		document
+			.querySelector(".ai-button")
+			?.addEventListener("click", this.handleAiButtonClicked.bind(this));
+	}
+
 	//add event listener for when page loads
 	configureApp() {
 		if (
-			/^https:\/\/boards\.greenhouse\.io\/\w+\/jobs\/\d+#[a-zA-Z]+$/.test(
+			/^https:\/\/boards\.greenhouse\.io\/\w+\/jobs\/\d/.test(
 				window.location.href
 			)
 		) {
