@@ -15,7 +15,7 @@
 	  "default_title": "Instant Apply",
 	  "default_popup": "background.html"
 	},
-	"permissions": ["storage", "tabs", "notifications", "webRequest", "webRequestBlocking"],
+	"permissions": ["storage", "tabs", "notifications", "webRequest" ],
 	"host_permissions": ["<all_urls>"],
 	"content_scripts": [
 	  {
@@ -53,13 +53,6 @@
 	  {
 		"matches": ["https://instantapply.co/onboarding/*"],
 		"js": ["index.js", "config.js", "accesstoken.js", "analytics.js"]
-	  }
-	],
-	"service_worker": [
-	  {
-		"registration_options": {
-		  "scope": "./"
-		}
 	  }
 	]
   }
