@@ -40,9 +40,9 @@ async function askQuestion(question) {
 			return answer;
 		}
 
-		return null; 
+		return null;
 	} catch (error) {
-		console.log('error happened at askQuestion',error)
+		console.log("error happened at askQuestion", error);
 		throw new Error(error.message);
 	}
 }
@@ -64,8 +64,8 @@ const parsePDFBYURL = async (resume_url) => {
 		// Return the extracted text as the API response
 		return text;
 	} catch (error) {
-		console.log('error happened at parsePDFBYURL',error)
-	
+		console.log("error happened at parsePDFBYURL", error);
+
 		throw new Error(error.message);
 	}
 };
@@ -75,17 +75,13 @@ async function getChatGPTResponse(jobDescription, pdfText) {
 	const parsedDescription = JSON.parse(jobDescription);
 
 	try {
-		
-	
 		const question = ` I need a cover letter for a job called ${parsedDescription.jobTitle} with the following requirements ${parsedDescription.jobRequirements} using my resume ${pdfText}`;
 		const chatGPTresponse = await askQuestion(question);
 		return chatGPTresponse;
 	} catch (error) {
-		console.log('error happened at getChatGPTResponse',error)
+		console.log("error happened at getChatGPTResponse", error);
 		throw new Error(error.message);
 	}
-
-	
 }
 
 //API ROUTES
@@ -234,22 +230,23 @@ app.post("/content", async (req, res) => {
 	}
 });
 
-api.get('/description', async (req, res) => {
-	
-// Usage example
-const webpageURL = `https://jobs.lever.co/${company}/${id}`;
-const elementSelector = '.section-wrapper .section:nth-child(3) ul'; // CSS selector of the HTML element you want to scrape
-  scrape(webpageURL, elementSelector)
-  .then(content => {
-    console.log('Scraped Content:', content);
-    // Use the scraped content as needed
-  })
-  .catch(error => {
-    console.error('Error:', error);
-    // Handle the error
-  });
-
-
+app.get("/description", async (req, res) => {
+	const company = "metabase";
+	const id = "5bf3233d-a162-47b2-8d85-d3650b176c6e";
+	// Usage example
+	const webpageURL = `https://jobs.lever.co/${company}/${id}`;
+	const elementSelector = ".section-wrapper .section:nth-child(3) ul"; // CSS selector of the HTML element you want to scrape
+	scrape(webpageURL, elementSelector)
+		.then((content) => {
+			res.status(200).json({
+				jobRequirement: content
+			})
+			// Use the scraped content as needed
+		})
+		.catch((error) => {
+			console.error("Error:", error);
+			// Handle the error
+		});
 });
 
 const port = 8000;
