@@ -23,7 +23,7 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
 
 
 // Establish a WebSocket connection with the backend server
-const socket = new WebSocket("ws://instantapplywebsockett.onrender.com"); // Replace with your WebSocket server URL
+const socket = new WebSocket("wss://instantapplywebsockett.onrender.com"); // Replace with your WebSocket server URL
 
 // Listen for messages from the WebSocket server
 socket.addEventListener("message", function (event) {
