@@ -21,3 +21,26 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
   }
 });
 
+
+// Establish a WebSocket connection with the backend server
+const socket = new WebSocket("wss://instantapply.co/api/socket"); // Replace with your WebSocket server URL
+
+// Listen for messages from the WebSocket server
+socket.addEventListener("message", function (event) {
+  const message = JSON.parse(event.data);
+  // Display the notification to the user
+  chrome.notifications.create({
+    type: "basic",
+    title: "Notification",
+    message: `Email sent to ${message.email} has been opened ${message.count} time${message.count > 1 ? "s" : ""}`,
+    iconUrl: "https://instantapply.co/assets/images/instantapply-logo.png",
+  });
+});
+
+
+//redirect to instantapply when chrome extension is uninstalled
+chrome.runtime.onInstalled.addListener(details => {
+  if (details.reason === chrome.runtime.OnInstalledReason.INSTALL) {
+    chrome.runtime.setUninstallURL('https://instantapply.co');
+  }
+});

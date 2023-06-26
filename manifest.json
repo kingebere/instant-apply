@@ -1,59 +1,66 @@
 {
 	"name": "Instant Apply",
 	"description": "Autofill your Job Applications in one click",
-	"version": "0.0.0.3",
+	"version": "0.0.0.4",
 	"manifest_version": 3,
 	"icons": {
-		"16": "logo/logo.png",
-		"48": "logo/logo.png",
-		"128": "logo/logo.png"
+	  "16": "logo/logo.png",
+	  "48": "logo/logo.png",
+	  "128": "logo/logo.png"
 	},
 	"background": {
-		"service_worker": "background.js"
+	  "service_worker": "background.js"
 	},
 	"action": {
-		"default_title": "Instant Apply",
-		"default_popup": "background.html"
+	  "default_title": "Instant Apply",
+	  "default_popup": "background.html"
 	},
-	"permissions": ["storage","tabs"],
+	"permissions": ["storage", "tabs", "notifications", "webRequest", "webRequestBlocking"],
 	"host_permissions": ["<all_urls>"],
 	"content_scripts": [
-		{
-			"matches": ["https://*.boards.greenhouse.io/*"],
-			"js": ["instant.js"]
-		},
-		{
-			"matches": ["https://*.lever.co/*/apply"],
-			"js": ["lever.js"]
-		},
-		{
-			"matches": ["https://*.jobs.ashbyhq.com/*"],
-			"js": ["ashbyhq.js"]
-		},
-		{
-			"matches": ["https://*.mail.google.com/mail/u/0/*"],
-			"js": ["gmail.js"]
-		},
-		{
-			"matches": ["https://*.lever.co/*/thanks"],
-			"js": ["submitlever.js"]
-		},
-		{
-			"matches": ["https://*.bamboohr.co.uk/*"],
-			"js": ["bamboohr.js"]
-		},
-		{
-			"matches": ["https://*.bamboohr.com/*"],
-			"js": ["bamboohr.js"]
-		},
-		{
-			"matches": ["https://*.boards.greenhouse.io/*/confirmation"],
-			"js": ["submitgreenhouse.js"]
-		},
-
-		{
-			"matches": ["https://instantapply.co/onboarding/*"],
-			"js": ["index.js", "config.js", "accesstoken.js", "analytics.js"]
+	  {
+		"matches": ["https://*.boards.greenhouse.io/*"],
+		"js": ["instant.js"]
+	  },
+	  {
+		"matches": ["https://*.lever.co/*/apply"],
+		"js": ["lever.js"]
+	  },
+	  {
+		"matches": ["https://*.jobs.ashbyhq.com/*"],
+		"js": ["ashbyhq.js"]
+	  },
+	  {
+		"matches": ["https://*.mail.google.com/mail/u/0/*"],
+		"js": ["gmail.js"]
+	  },
+	  {
+		"matches": ["https://*.lever.co/*/thanks"],
+		"js": ["submitlever.js"]
+	  },
+	  {
+		"matches": ["https://*.bamboohr.co.uk/*"],
+		"js": ["bamboohr.js"]
+	  },
+	  {
+		"matches": ["https://*.bamboohr.com/*"],
+		"js": ["bamboohr.js"]
+	  },
+	  {
+		"matches": ["https://*.boards.greenhouse.io/*/confirmation"],
+		"js": ["submitgreenhouse.js"]
+	  },
+	  {
+		"matches": ["https://instantapply.co/onboarding/*"],
+		"js": ["index.js", "config.js", "accesstoken.js", "analytics.js"]
+	  }
+	],
+	"service_worker": [
+	  {
+		"registration_options": {
+		  "scope": "./"
 		}
+	  }
 	]
-}
+  }
+  
