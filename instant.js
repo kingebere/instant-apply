@@ -249,7 +249,7 @@ class greenhouseMainScript {
 	configureElementToRemoveModal(className) {
 		document
 			.querySelector(className)
-			.addEventListener("click", this.removeSubscribeModal.bind(this));
+			?.addEventListener("click", this.removeSubscribeModal.bind(this));
 	}
 
 	addPopUpButtonToPage() {
@@ -281,7 +281,7 @@ class greenhouseMainScript {
 
 	//add event listener to popup button
 	configurePopUpButton() {
-		this.btn.addEventListener(
+		this.btn?.addEventListener(
 			"click",
 			this.handlePopUpbuttonClicked.bind(this)
 		);
@@ -495,7 +495,7 @@ class greenhouseMainScript {
 			try {
 				const response = await fetch("https://instantapply.co/api/content", {
 					method: "POST",
-				
+
 					body: JSON.stringify({
 						session,
 						jobDescription,
@@ -521,7 +521,7 @@ class greenhouseMainScript {
 	configureAiButtonClick() {
 		document
 			.querySelector(".ai-button")
-			.addEventListener("click", this.handleAiButtonClicked.bind(this));
+			?.addEventListener("click", this.handleAiButtonClicked.bind(this));
 	}
 
 	//add event listener for when page loads

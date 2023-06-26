@@ -20,6 +20,8 @@ class leverMainScript {
 		this.locationElement = document.querySelector(".posting-category.location");
 		this.commitmentElement = document.querySelector("div.commitment");
 		this.formElement = document.querySelector("#application-form");
+
+		this.configureForm()
 	}
 
 	removeSubscribeModal() {
@@ -165,10 +167,12 @@ class leverMainScript {
 			{ jobDescription: JSON.stringify(jobDescription) },
 			function () {}
 		);
+
+		
 	}
 
 	configureForm() {
-		this.formElement.addEventListener(
+		this.formElement?.addEventListener(
 			"submit",
 			this.handleFormSubmit.bind(this)
 		);
@@ -177,7 +181,7 @@ class leverMainScript {
 	configureElementToRemoveModal(className) {
 		document
 			.querySelector(className)
-			.addEventListener("click", this.removeSubscribeModal.bind(this));
+			?.addEventListener("click", this.removeSubscribeModal.bind(this));
 	}
 
 	fillnameEmailCompanyLinkedIn(
@@ -309,7 +313,7 @@ class leverMainScript {
 	}
 
 	configurePopUpButton() {
-		this.btn.addEventListener(
+		this.btn?.addEventListener(
 			"click",
 			this.handlePopUpbuttonClicked.bind(this)
 		);
