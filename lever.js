@@ -4,6 +4,11 @@ function getCompanyName() {
 	return this.presentWindowUrl.split("/")[3];
 }
 
+function getCompanyID() {
+	this.presentWindowUrl = window.location.href;
+	return this.presentWindowUrl.split("/")[4];
+}
+
 class leverMainScript {
 	constructor() {
 		this.configureApp();
@@ -20,6 +25,101 @@ class leverMainScript {
 		this.locationElement = document.querySelector(".posting-category.location");
 		this.commitmentElement = document.querySelector("div.commitment");
 		this.formElement = document.querySelector("#application-form");
+
+		this.configureForm();
+	}
+
+	async handleAiButtonClicked() {
+		const name = getCompanyName();
+		const id = getCompanyID();
+
+		try {
+			const response = await fetch(
+				`https://instantapply.co/description?name=${name}&id=${id}`
+			);
+
+			if (response.status == 200) {
+				const data = await response.json();
+
+				const session = (await chrome.storage.sync.get("session"))["session"];
+
+				if (session) {
+					const {
+						data: {
+							session: {
+								user: { id },
+							},
+						},
+					} = JSON.parse(session);
+
+					const jobDescription = JSON.stringify({
+						jobTitle: this.jobPositionElement.textContent,
+						jobRequirements: data.jobRequirement,
+					});
+
+					try {
+						const response = await fetch("https://instantapply.co/api/content", {
+							method: "POST",
+							body: JSON.stringify({
+								session,
+								jobDescription,
+							}),
+							headers: {
+								"Content-Type": "application/json",
+							},
+						});
+
+						if (response.status === 200) {
+							const data = await response.json();
+							document.querySelector("textarea").value = data.message;
+						}
+					} catch (e) {
+						alert("An error occurred");
+						console.log(e);
+					}
+				} else window.open("https://instantapply.co", "_blank");
+			}
+		} catch (e) {}
+	}
+
+	configureAiButtonClick() {
+		document
+			.querySelector(".ai-button")
+			?.addEventListener("click", this.handleAiButtonClicked.bind(this));
+	}
+
+	addAiButton() {
+		const button = document.createElement("div");
+		button.className = "ai-button";
+		button.textContent = "Instant Cover-Letter?";
+
+		button.setAttribute(
+			"style",
+			`
+        padding: .8em 1em;
+		 margin:1em 0;
+		 display: inline-block;
+		 background-color:blue;
+		 color:white;
+		 border-radius:.5em;
+		 font-weight:medium;
+		 font-size:14px;
+		 cursor:pointer;
+		`
+		);
+
+		const textArea = document.querySelector(".application-additional");
+
+		if (textArea) {
+			textArea.setAttribute(
+				"style",
+				`
+			position:relative;
+			`
+			);
+			textArea?.parentNode?.appendChild(button);
+		}
+		this.configureAiButtonClick();
 	}
 
 	removeSubscribeModal() {
@@ -168,7 +268,7 @@ class leverMainScript {
 	}
 
 	configureForm() {
-		this.formElement.addEventListener(
+		this.formElement?.addEventListener(
 			"submit",
 			this.handleFormSubmit.bind(this)
 		);
@@ -177,7 +277,7 @@ class leverMainScript {
 	configureElementToRemoveModal(className) {
 		document
 			.querySelector(className)
-			.addEventListener("click", this.removeSubscribeModal.bind(this));
+			?.addEventListener("click", this.removeSubscribeModal.bind(this));
 	}
 
 	fillnameEmailCompanyLinkedIn(
@@ -309,10 +409,12 @@ class leverMainScript {
 	}
 
 	configurePopUpButton() {
-		this.btn.addEventListener(
+		this.btn?.addEventListener(
 			"click",
 			this.handlePopUpbuttonClicked.bind(this)
 		);
+
+		this.addAiButton();
 	}
 
 	configureApp() {
