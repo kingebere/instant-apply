@@ -60,6 +60,7 @@ class leverMainScript {
 					try {
 						const response = await fetch("https://instantapply.co/api/content", {
 							method: "POST",
+              mode: "cors",
 							body: JSON.stringify({
 								session,
 								jobDescription,
