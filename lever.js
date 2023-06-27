@@ -32,37 +32,25 @@ class leverMainScript {
 	async handleAiButtonClicked() {
 		const name = getCompanyName();
 		const id = getCompanyID();
+		const session = (await chrome.storage.sync.get("session"))["session"];
 
-		try {
-			const response = await fetch(
-				`https://instantapply.co/api/description?name=${name}&id=${id}`
-			);
+		if (session) {
+			try {
+				const response = await fetch(
+					`https://instantapply.co/api/description?name=${name}&id=${id}`
+				);
 
-			if (response.status == 200) {
-				const data = await response.json();
-
-				const session = (await chrome.storage.sync.get("session"))["session"];
-
-				if (session) {
-					const {
-						data: {
-							session: {
-								user: { id },
-							},
-						},
-					} = JSON.parse(session);
-
+				if (response.status == 200) {
+					const data = await response.json();
 					const jobDescription = JSON.stringify({
 						jobTitle: this.jobPositionElement.textContent,
 						jobRequirements: data.jobRequirement,
 					});
-
 					try {
-						const response = await fetch("https://instantapply.co/api/content", {
+						const callresponse = await fetch("https://instantapply.co/api/parse", {
 							method: "POST",
 							body: JSON.stringify({
 								session,
-								jobDescription,
 							}),
 							headers: {
 								"Content-Type": "application/json",
@@ -70,16 +58,34 @@ class leverMainScript {
 						});
 
 						if (response.status === 200) {
-							const data = await response.json();
-							document.querySelector("textarea").value = data.message;
+							const dataresponse = await callresponse.json();
+						
+
+							const response = await fetch(
+								"https://api.instantapply.co/content",
+								{
+									method: "POST",
+									body: JSON.stringify({
+										pdfText: dataresponse.message,
+										jobDescription,
+									}),
+									headers: {
+										"Content-Type": "application/json",
+									},
+								}
+							);
+
+							if (response.status === 200) {
+								const data = await response.json();
+								document.querySelector("textarea").value = data.message;
+							}
 						}
 					} catch (e) {
-						alert("An error occurred");
 						console.log(e);
 					}
-				} else window.open("https://instantapply.co", "_blank");
-			}
-		} catch (e) {}
+				}
+			} catch (e) {}
+		} else window.open("https://instantapply.co", "_blank");
 	}
 
 	configureAiButtonClick() {
