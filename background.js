@@ -1,3 +1,41 @@
+// Establish a WebSocket connection with the backend server
+const socket = new WebSocket("wss://instantapplywebsockett.onrender.com"); // Replace with your WebSocket server URL
+
+// Listen for WebSocket messages
+socket.addEventListener("message", (message)=> {
+  console.log(message, "event");
+  const receivedMessage = JSON.parse(message);
+
+  // Display the notification to the user
+
+
+  chrome.notifications.create({
+    type: "basic",
+    title: "Notification",
+    message: `Email sent to ${receivedMessage.email} has been opened ${receivedMessage.count} time${receivedMessage.count > 1 ? "s" : ""}`,
+    iconUrl:"logo/logo.png"
+  }, function (notificationId) {
+    if (chrome.runtime.lastError) {
+      console.error("Notification creation error:", chrome.runtime.lastError);
+    } else {
+      console.log("Notification created with ID:", notificationId);
+    }
+  });
+  socket.close();
+});
+
+// Listen for WebSocket connection open
+socket.addEventListener("open", ()=> {
+  console.log("WebSocket connection established");
+});
+
+// Listen for WebSocket errors
+socket.addEventListener("error", (error)=> {
+  console.error("WebSocket error:", error);
+  socket.close();
+});
+
+
 //redirect to instantapply when chrome extension is installed
 
 chrome.runtime.onInstalled.addListener(({reason}) => {
@@ -22,37 +60,9 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
 });
 
 
-// Establish a WebSocket connection with the backend server
-const socket = new WebSocket("wss://instantapplywebsockett.onrender.com"); // Replace with your WebSocket server URL
 
-// Listen for WebSocket connection open
-socket.addEventListener("open", function () {
-  console.log("WebSocket connection established");
-});
 
-// Listen for WebSocket errors
-socket.addEventListener("error", function (error) {
-  console.error("WebSocket error:", error);
-});
 
-// Listen for WebSocket messages
-socket.addEventListener("message", function (message) {
-  const messages = JSON.parse(message.data);
-  console.log(message, "event");
-  // Display the notification to the user
-  chrome.notifications.create({
-    type: "basic",
-    title: "Notification",
-    message: `Email sent to ${messages.email} has been opened ${messages.count} time${messages.count > 1 ? "s" : ""}`,
-    iconUrl: "https://instantapply.co/assets/images/instantapply-logo.png",
-  }, function (notificationId) {
-    if (chrome.runtime.lastError) {
-      console.error("Notification creation error:", chrome.runtime.lastError);
-    } else {
-      console.log("Notification created with ID:", notificationId);
-    }
-  });
-});
 
 
 
