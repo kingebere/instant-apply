@@ -49,81 +49,72 @@ class gmailMainScript {
 
     console.log(content) // Output: design@uiland.design
 
-    // Get the first div element
-    let targetDiv = document.querySelector("div.Am.Al.editable.LW-avf.tS-tW")
+  // Get the first div element
+let targetDiv = document.querySelector("div.Am.Al.editable.LW-avf.tS-tW");
 
-    // Find the first child <div> element within the parent
-    const firstDiv = targetDiv.querySelector("div")
+const newDiv = document.createElement("div");
 
-    // Find the <br> tag inside the div
-    const brTag = firstDiv.querySelector("br")
+// Create a <pre> element
+const preTag = document.createElement("pre");
+preTag.style.whiteSpace = "pre-wrap"; // Preserve line breaks and spaces
+preTag.style.font = "small/1.5 Arial,Helvetica,sans-serif";
+preTag.style.letterSpacing = "normal";
 
-    // Find the nearest parent of the <br> tag
-    const ancestorElement = brTag.parentElement
+if (content || emailElement) {
+  // Email address
+  const emailAddress = content || emailElement;
 
-    // Create a <pre> element
-    const preTag = document.createElement("pre")
-    preTag.style.whiteSpace = "pre-wrap" // Preserve line breaks and spaces
-    preTag.style.font = "small/1.5 Arial,Helvetica,sans-serif"
-    preTag.style.letterSpacing = "normal"
+  // Extract the text after the '@' symbol
+  const atIndex = emailAddress.indexOf("@");
+  const domain = emailAddress.substr(atIndex + 1);
 
-    if (content || emailElement) {
-      console.log(content, emailElement)
-      // Email address
-      const emailAddress = content || emailElement
+  // Extract the text before the '.' symbol in the domain
+  const dotIndex = domain.indexOf(".");
+  const text = domain.substr(0, dotIndex);
 
-      // Extract the text after the '@' symbol
-      const atIndex = emailAddress.indexOf("@")
-      const domain = emailAddress.substr(atIndex + 1)
+  // Capitalize the first letter
+  const companyName = text.charAt(0).toUpperCase() + text.slice(1);
 
-      // Extract the text before the '.' symbol in the domain
-      const dotIndex = domain.indexOf(".")
-      const text = domain.substr(0, dotIndex)
+  // Replace placeholder in gmailContent with companyName
+  const replacedContent = gmailContent.replace("{{company}}", companyName);
 
-      // Capitalize the first letter
-      const companyName = text.charAt(0).toUpperCase() + text.slice(1)
+  function generatePixelTrackingUrl(recipientEmail) {
+    const baseUrl = "https://instantapply.co/api/tracking.gif";
+    const uniqueUrl = `${baseUrl}?email=${encodeURIComponent(
+      recipientEmail
+    )}`;
 
-      console.log(companyName)
+    return uniqueUrl;
+  }
 
-      // Replace placeholder in gmailContent with companyName
-      const replacedContent = gmailContent.replace("{{company}}", companyName)
-      console.log(replacedContent)
+  const recipientEmail = emailAddress;
+  const pixelTrackingUrl = generatePixelTrackingUrl(recipientEmail);
 
-      function generatePixelTrackingUrl(recipientEmail) {
-        const baseUrl = "https://instantapply.co/api/tracking.gif"
-        const uniqueUrl = `${baseUrl}?email=${encodeURIComponent(
-          recipientEmail
-        )}`
+  // Assuming you have the pixelTrackingUrl generated
 
-        return uniqueUrl
-      }
+  // Create a <img> element for the tracking pixel
+  const trackingPixel = document.createElement("img");
+  trackingPixel.src = pixelTrackingUrl;
+  trackingPixel.width = 1;
+  trackingPixel.height = 1;
+  trackingPixel.style.display = "none";
 
-      const recipientEmail = emailAddress
-      const pixelTrackingUrl = generatePixelTrackingUrl(recipientEmail)
+  // Send the email with the emailContent
 
-      // Assuming you have the pixelTrackingUrl generated
+  // Set the text content of the <pre> tag to the replaced content and include the pixel tracking URL in the email content
+  preTag.textContent = replacedContent;
 
-      // Create a <img> element for the tracking pixel
-      const trackingPixel = document.createElement("img")
-      trackingPixel.src = pixelTrackingUrl
-      trackingPixel.width = 1
-      trackingPixel.height = 1
-      trackingPixel.style.display = "none"
+  // Append the tracking pixel to the parent container
+  targetDiv.appendChild(trackingPixel);
+} else {
+  // Set the text content of the <pre> tag to the original content
+  preTag.textContent = gmailContent;
+}
 
-      // Send the email with the emailContent
+// Insert the newDiv as the first child node of targetDiv
+targetDiv.insertBefore(newDiv, targetDiv.firstChild);
+newDiv.appendChild(preTag);
 
-      // Set the text content of the <pre> tag to the replaced content and include the pixel tracking URL in the email content
-      preTag.textContent = replacedContent
-
-      // Append the tracking pixel to the parent container
-      targetDiv.appendChild(trackingPixel)
-    } else {
-      // Set the text content of the <pre> tag to the original content
-      preTag.textContent = gmailContent
-    }
-
-    // Replace the <br> tag with the <pre> tag
-    ancestorElement.replaceChild(preTag, brTag)
   }
 
   async uploadResume(resume_url, filename) {

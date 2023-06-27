@@ -49,6 +49,7 @@ class leverMainScript {
 					try {
 						const callresponse = await fetch("https://instantapply.co/api/parse", {
 							method: "POST",
+              mode: "cors",
 							body: JSON.stringify({
 								session,
 							}),
