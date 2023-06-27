@@ -78,7 +78,12 @@ class leverMainScript {
 
 							if (response.status === 200) {
 								const data = await response.json();
-								document.querySelector("textarea").value = data.message;
+							
+                const textarea = document.querySelector("#additional-information");
+
+if (textarea.placeholder.includes("cover letter")) {
+  textarea.value = data.message;
+}
 							}
 						}
 					} catch (e) {
