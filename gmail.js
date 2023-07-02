@@ -78,7 +78,7 @@ class gmailMainScript {
 			// Replace placeholder in gmailContent with companyName
 			const replacedContent = gmailContent.replace("{{company}}", companyName);
 
-			function generatePixelTrackingUrl(recipientEmail) {
+		async 	function generatePixelTrackingUrl(recipientEmail) {
 				let userStatus;
 				if (
 					window.location.href.includes("#inbox") &&
@@ -91,10 +91,13 @@ class gmailMainScript {
 					userStatus = "sender";
 				}
 
+        const response= await fetch("https://instantapply.co/api/getIp")
+        const ipData=await response.json();
+
 				const baseUrl = "https://instantapply.co/api/tracking.gif";
 				const uniqueUrl = `${baseUrl}?email=${encodeURIComponent(
 					recipientEmail
-				)}&jobId=hallelu&userStatus=${userStatus}`;
+				)}&jobId=hallelu&userStatus=${userStatus}&ip=${ipData}`;
 
 				return uniqueUrl;
 			}
