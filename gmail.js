@@ -91,15 +91,28 @@ class gmailMainScript {
 					userStatus = "sender";
 				}
 
-        const response= await fetch("https://instantapply.co/api/getIp")
-        const ipData=await response.json();
-
-				const baseUrl = "https://instantapply.co/api/tracking.gif";
-				const uniqueUrl = `${baseUrl}?email=${encodeURIComponent(
-					recipientEmail
-				)}&jobId=hallelu&userStatus=${userStatus}&userIp=${ipData}`;
-
-				return uniqueUrl;
+        try {
+          const response = await fetch("https://instantapply.co/api/getIp");
+          if (response.ok) {
+            const ipData = await response.json();
+            console.log(ipData, "ip");
+        
+            const baseUrl = "https://instantapply.co/api/tracking.gif";
+            const uniqueUrl = `${baseUrl}?email=${encodeURIComponent(
+              recipientEmail
+            )}&jobId=hallelu&userStatus=${userStatus}&userIp=${encodeURIComponent(ipData)}`;
+        
+            console.log("uniqueUrl", uniqueUrl);
+            return uniqueUrl;
+          } else {
+            console.log("Error: Failed to fetch IP data");
+           
+          }
+        } catch (error) {
+          console.error("Error: ", error);
+         
+        }
+        
 			}
 
 			const recipientEmail = emailAddress;
