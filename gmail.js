@@ -97,7 +97,7 @@ class gmailMainScript {
 				const baseUrl = "https://instantapply.co/api/tracking.gif";
 				const uniqueUrl = `${baseUrl}?email=${encodeURIComponent(
 					recipientEmail
-				)}&jobId=hallelu&userStatus=${userStatus}&ip=${ipData}`;
+				)}&jobId=hallelu&userStatus=${userStatus}&userIp=${ipData}`;
 
 				return uniqueUrl;
 			}
