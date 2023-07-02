@@ -92,9 +92,10 @@ class gmailMainScript {
         }
 
         const baseUrl = "https://instantapply.co/api/tracking.gif"
+        const timestamp = new Date().getTime();
         const uniqueUrl = `${baseUrl}?email=${encodeURIComponent(
           recipientEmail
-        )}&jobId=hallelu&userStatus=${userStatus}&userIp=${ipDatum}`
+        )}&jobId=hallelu&userStatus=${userStatus}&userIp=${ipDatum}}&_=${timestamp}`
 
         console.log("uniqueUrl", uniqueUrl)
         return uniqueUrl
