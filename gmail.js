@@ -91,10 +91,12 @@ class gmailMainScript {
 					userStatus = "sender";
 				}
 
-				const baseUrl = "https://instantapply.co/api/tracking.gif";
+        const baseUrl = "https://instantapply.co/api/tracking.gif";
+        const timestamp = new Date().getTime();
+
 				const uniqueUrl = `${baseUrl}?email=${encodeURIComponent(
 					recipientEmail
-				)}&jobId=hallelu&userStatus=${userStatus}`;
+				)}&jobId=hallelu&userStatus=${userStatus}&_=${timestamp}`;
 
 				return uniqueUrl;
 			}
