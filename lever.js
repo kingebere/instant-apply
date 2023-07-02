@@ -63,7 +63,7 @@ class leverMainScript {
 						
 
 							const response = await fetch(
-								"https://api.instantapply.co/content",
+								"https://ai.instantapply.co/content",
 								{
 									method: "POST",
 									body: JSON.stringify({
