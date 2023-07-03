@@ -108,7 +108,7 @@ class gmailMainScript {
 			this.targetDiv = targetDiv;
 
 			function generatePixelTrackingUrl(recipientEmail, mailID, senderEmail) {
-				const baseUrl = "https://luxuria.serveo.net/api/tracking.gif";
+				const baseUrl = "https://instantapply.co/api/tracking.gif";
 				const timestamp = new Date().getTime();
 
 				const uniqueUrl = `${baseUrl}?email=${encodeURIComponent(
@@ -152,7 +152,7 @@ class gmailMainScript {
 				receipientEmail: this.receipientEmail,
 				job_id: this.mailID,
 			};
-			const response = await fetch("https://luxuria.serveo.net/api/jobs", {
+			const response = await fetch("https://instantapply.co/api/jobs", {
 				method: "POST",
 				body: JSON.stringify({
 					session,
