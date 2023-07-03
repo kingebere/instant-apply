@@ -30,11 +30,17 @@ class gmailMainScript {
 		});
 	}
 
-	fillnameEmailCompanyLinkedIn(
+	async fillnameEmailCompanyLinkedIn(
 		gmailRecipientEmail,
 		gmailSubject,
 		gmailContent
 	) {
+		const session = (await chrome.storage.sync.get("session"))["session"];
+		const {
+			data: {
+				session: { user },
+			},
+		} = JSON.parse(session);
 		const hiddensubjectElement = document.querySelector(".fX.aiL");
 		const hiddensubjectElement2 = document.querySelector(".aoD.hl");
 		const gmailSubjectElement = document.querySelector(
@@ -96,31 +102,27 @@ class gmailMainScript {
 
 			this.receipientEmail = recipientEmail;
 
-
 			// Set the text content of the <pre> tag to the replaced content and include the pixel tracking URL in the email content
 			preTag.textContent = replacedContent;
 			// Append the tracking pixel to the parent container
 			this.targetDiv = targetDiv;
 
-			function generatePixelTrackingUrl(recipientEmail, mailID) {
-				const baseUrl = "https://plurimi.serveo.net/api/tracking.gif";
+			function generatePixelTrackingUrl(recipientEmail, mailID, senderEmail) {
+				const baseUrl = "https://luxuria.serveo.net/api/tracking.gif";
 				const timestamp = new Date().getTime();
 
 				const uniqueUrl = `${baseUrl}?email=${encodeURIComponent(
 					recipientEmail
-				)}&jobId=${mailID}&_=${timestamp}`;
+				)}&jobId=${mailID}&_=${timestamp}&senderEmail=${senderEmail}`;
 
 				return uniqueUrl;
 			}
 
 			const pixelTrackingUrl = generatePixelTrackingUrl(
 				this.receipientEmail,
-				this.mailID
+				this.mailID,
+				user.email
 			);
-
-		
-
-			// Assuming you have the pixelTrackingUrl generated
 
 			// Create a <img> element for the tracking pixel
 			const trackingPixel = document.createElement("img");
@@ -150,7 +152,7 @@ class gmailMainScript {
 				receipientEmail: this.receipientEmail,
 				job_id: this.mailID,
 			};
-			const response = await fetch("https://plurimi.serveo.net/api/jobs", {
+			const response = await fetch("https://luxuria.serveo.net/api/jobs", {
 				method: "POST",
 				body: JSON.stringify({
 					session,
