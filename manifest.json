@@ -32,7 +32,7 @@
 	  },
 	  {
 		"matches": ["https://*.mail.google.com/mail/u/0/*"],
-		"js": ["gmail.js"]
+		"js": ["gmail.js","forge.js"]
 	  },
 	  {
 		"matches": ["https://*.lever.co/*/thanks"],
