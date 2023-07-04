@@ -153,47 +153,64 @@ class gmailMainScript {
     this.subscribeformSubmitButton()
   }
 
+
+  changeUrl() {
+    // Regular expression pattern to match URLs
+    const urlRegex = /(?:(?:https?|ftp):\/\/|www\.)[^\s/$.?#].[^\s]*/g;
+  
+    const modifiedPre = document.querySelector(".instant-pre");
+    let newPreContent = modifiedPre.textContent;
+  
+    // Function to replace URLs with modified versions
+    const replaceUrls = async (content) => {
+      const matches = content.match(urlRegex); // Extract all URLs from the content
+  
+      if (!matches) {
+        return content; // No URLs found, return the original content
+      }
+  
+      // Replace URLs asynchronously
+      const modifiedUrls = await Promise.all(
+        matches.map(async (match) => {
+          const result = await fetch("https://instantapply.co/api/encryptUrl", {
+            method: "POST",
+            body: JSON.stringify({ match }),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+          const data = await result.text();
+  
+          const modifiedUrl = `https://instantapply.co/api/link-tracker?id=${data}`;
+  
+          return modifiedUrl;
+        })
+      );
+  
+      // Replace the URLs in the content
+      let currentIndex = 0;
+      const modifiedContent = content.replace(urlRegex, () => {
+        return modifiedUrls[currentIndex++];
+      });
+  
+      return modifiedContent;
+    };
+  
+    // Call the replaceUrls function with the HTML content
+    (async () => {
+      const modifiedContent = await replaceUrls(newPreContent);
+      console.log("modifiedContent", modifiedContent);
+      modifiedPre.textContent = modifiedContent;
+    })();
+  }
+  
+  
+  
+
   async handleGmailFormClicked() {
     const session = (await chrome.storage.sync.get("session"))["session"]
 
-    // Regular expression pattern to match URLs
-    const urlRegex = /(?:(?:https?|ftp):\/\/|www\.)[^\s/$.?#].[^\s]*/g
-
-    // Array to store unique IDs
-    let uniqueIdss = []
-
-    const modifiedpre = document.querySelector(".instant-pre")
-    let newPreContent = modifiedpre.textContent
-    // Function to replace URLs with modified versions
-    const replaceUrls = (content) => {
-      return content.replace(urlRegex, (match) => {
-        const id = generateRandomString()
-        const timestamp = generateTimestamp() // Generate a timestamp for uniqueness
-        // const uniqueId = `${id}_${timestamp}`;
-
-        const secretKey = "Instant" // Replace with your own secret key
-
-        // Create a new encryption cipher
-        const cipher = forge.cipher.createCipher("AES-CBC", secretKey)
-        cipher.start()
-        cipher.update(forge.util.createBuffer(match, "utf8"))
-        cipher.finish()
-
-        // Get the encrypted bytes
-        const encryptedBytes = cipher.output.getBytes()
-
-        // Convert the encrypted bytes to a Base64-encoded string
-        const encryptedString = forge.util.encode64(encryptedBytes)
-
-        const modifiedUrl = `https://instantapply.co/api/link-tracker?id=${encryptedString}`
-        uniqueIdss.push(id) // Store the unique ID in the array
-        return `${modifiedUrl}`
-      })
-    }
-
-    // Call the replaceUrls function with the HTML content
-    document.querySelector(".instant-pre").textContent =
-      replaceUrls(newPreContent)
+  
     if (session) {
       const jobDescription = {
         receipientEmail: this.receipientEmail,
@@ -305,6 +322,7 @@ class gmailMainScript {
       img.style.marginLeft = "6px"
       img.style.zIndex = "999"
       btn.style.cursor = "pointer"
+      btn.style.position="relative"
 
       // Find the target element to append the button
       var targetElement = document.querySelector("tr.btC")
@@ -323,8 +341,137 @@ class gmailMainScript {
   }
 
   configurePopUpButton() {
-    this.btn.addEventListener("click", this.handlePopUpbuttonClicked.bind(this))
+    this.btn.addEventListener("click", this.handlePopUp.bind(this))
   }
+
+togglePopup(){
+    if(modalSmallPopContainer.style.display==="none"){
+      modalSmallPopContainer.style.display==="none"
+    }else{
+      modalSmallPopContainer.style.display==="block"
+    }
+  }
+
+handlePopUp(){
+  const modalSmallPopContainer=document.createElement("div")
+  modalSmallPopContainer.setAttribute("style",`
+  position: absolute;
+  top: -118px;
+  min-width: 160px;
+  z-index: 10000000000;
+  `)
+  const modalPop= document.createElement("div");
+  modalPop.className="small-popup";
+  modalPop.setAttribute("style",`
+
+  margin: 0;
+    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.07), 0px 1px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 8px;
+    background: #fff;
+    font-size: 14px;
+    line-height: 22px;
+    font-family: circular, Helvetica, sans-serif;
+
+  `
+
+  )
+  const firstContent=document.createElement("div");
+  firstContent.className="instant-popcontent";
+  firstContent.setAttribute("style",`
+  align-items: center;
+  flex-direction: row;
+  justify-content: flex-start;
+  display: flex;
+  border-radius: 8px;
+  padding: 5px 8px 5px 10px;
+  background-color: transparent;
+  cursor: pointer;
+  color:black;
+  `)
+
+ const innerFirstContent=document.createElement("div");
+ innerFirstContent.setAttribute("style",`
+ 
+ `)
+ innerFirstContent.textContent="AutoFill"
+
+
+ const secondContent=document.createElement("div");
+  secondContent.className="instant-popcontent";
+  secondContent.setAttribute("style",`
+  align-items: center;
+  flex-direction: row;
+  justify-content: flex-start;
+  display: flex;
+  border-radius: 8px;
+  padding: 5px 8px 5px 10px;
+  background-color: transparent;
+  cursor: pointer;
+  color:black;
+  `)
+
+ const innerSecondContent=document.createElement("div");
+ innerSecondContent.setAttribute("style",`
+ 
+ `)
+ innerSecondContent.textContent="Track Links"
+
+
+ const thirdContent=document.createElement("div");
+ thirdContent.className="instant-popcontent";
+ thirdContent.setAttribute("style",`
+ align-items: center;
+ flex-direction: row;
+ justify-content: flex-start;
+ display: flex;
+ border-radius: 8px;
+ padding: 5px 8px 5px 10px;
+ background-color: transparent;
+ cursor: pointer;
+ color:black;
+ `)
+
+const innerThirdContent=document.createElement("div");
+innerThirdContent.setAttribute("style",`
+
+`)
+innerThirdContent.textContent="Track PDFs"
+
+const hoverBox=document.querySelector(".instant-popcontent")
+if(hoverBox){
+  hoverBox.addEventListener("mouseover",()=>{
+  hoverBox.style.backgroundColor="blue";
+  hoverBox.style.color="white"
+})
+hoverBox.addEventListener("mouseout",()=>{
+  hoverBox.style.backgroundColor="transparent";
+  hoverBox.style.color="black"
+})
+}
+
+
+firstContent.addEventListener("click",()=>{
+  this.handlePopUpbuttonClicked(this)
+   this.togglePopup(); 
+
+})
+
+secondContent.addEventListener("click",()=>{
+  this.changeUrl(this)
+  this.togglePopup(); 
+})
+
+firstContent.appendChild(innerFirstContent)
+secondContent.appendChild(innerSecondContent)
+thirdContent.appendChild(innerThirdContent)
+modalPop.appendChild(firstContent)
+modalPop.appendChild(secondContent)
+modalPop.appendChild(thirdContent)
+modalSmallPopContainer.appendChild(modalPop)
+const button=document.querySelector(".action_button")
+button.appendChild(modalSmallPopContainer)
+}
 
   configureApp() {
     window.addEventListener("load", () => {
