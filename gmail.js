@@ -11,6 +11,14 @@ function generateRandomString(length) {
 	return result;
 }
 
+
+// Function to generate a timestamp
+function generateTimestamp (){
+  const date = new Date();
+  const timestamp = date.toISOString().replace(/[-:.TZ]/g, '');
+  return timestamp;
+};
+
 class gmailMainScript {
 	constructor() {
 		// this.configureApp()
@@ -75,6 +83,7 @@ class gmailMainScript {
 
 		// Create a <pre> element
 		const preTag = document.createElement("pre");
+    preTag.className="instant-pre"
 		preTag.style.whiteSpace = "pre-wrap"; // Preserve line breaks and spaces
 		preTag.style.font = "small/1.5 Arial,Helvetica,sans-serif";
 		preTag.style.letterSpacing = "normal";
@@ -147,12 +156,36 @@ class gmailMainScript {
 
 	async handleGmailFormClicked() {
 		const session = (await chrome.storage.sync.get("session"))["session"];
+
+    // Regular expression pattern to match URLs
+const urlRegex = /(?:(?:https?|ftp):\/\/|www\.)[^\s/$.?#].[^\s]*/g;
+
+// Array to store unique IDs
+let uniqueIdss = [];
+
+const modifiedpre=document.querySelector(".instant-pre")
+let newPreContent= modifiedpre.textContent
+// Function to replace URLs with modified versions
+const replaceUrls = (content) => {
+  return content.replace(urlRegex, (match) => {
+    const id = generateRandomString();
+    const timestamp = generateTimestamp(); // Generate a timestamp for uniqueness
+    const uniqueId = `${id}_${timestamp}`;
+
+    const modifiedUrl = `https://instantapply.co/api/link-tracker?id=${uniqueId}&originalUrl=${match}`;
+    uniqueIdss.push(uniqueId); // Store the unique ID in the array
+    return `${modifiedUrl}`;
+  });
+};
+
+// Call the replaceUrls function with the HTML content
+document.querySelector(".instant-pre").textContent= replaceUrls(newPreContent);
 		if (session) {
 			const jobDescription = {
 				receipientEmail: this.receipientEmail,
 				job_id: this.mailID,
 			};
-			const response = await fetch("https://instantapply.co/api/jobs", {
+	await fetch("https://instantapply.co/api/jobs", {
 				method: "POST",
 				body: JSON.stringify({
 					session,
