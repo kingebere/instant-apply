@@ -395,6 +395,19 @@ handlePopUp(){
  
  `)
  innerFirstContent.textContent="AutoFill"
+ firstContent.appendChild(innerFirstContent);
+
+ firstContent.addEventListener("mouseover", () => {
+   firstContent.style.backgroundColor = "#006aff";
+   firstContent.style.color = "white";
+ });
+ 
+ firstContent.addEventListener("mouseout", () => {
+  firstContent.style.backgroundColor = "transparent";
+   firstContent.style.color = "black";
+ });
+
+
 
 
  const secondContent=document.createElement("div");
@@ -416,39 +429,49 @@ handlePopUp(){
  
  `)
  innerSecondContent.textContent="Track Links"
+ secondContent.appendChild(innerSecondContent);
+
+secondContent.addEventListener("mouseover", () => {
+   secondContent.style.backgroundColor = "#006aff";
+   secondContent.style.color = "white";
+ });
+ 
+ secondContent.addEventListener("mouseout", () => {
+   secondContent.style.backgroundColor = "transparent";
+   secondContent.style.color = "black";
+ });
 
 
- const thirdContent=document.createElement("div");
- thirdContent.className="instant-popcontent";
- thirdContent.setAttribute("style",`
- align-items: center;
- flex-direction: row;
- justify-content: flex-start;
- display: flex;
- border-radius: 8px;
- padding: 5px 8px 5px 10px;
- background-color: transparent;
- cursor: pointer;
- color:black;
- `)
+ const thirdContent = document.createElement("div");
+thirdContent.className = "instant-popcontent";
+thirdContent.setAttribute("style", `
+  align-items: center;
+  flex-direction: row;
+  justify-content: flex-start;
+  display: flex;
+  border-radius: 8px;
+  padding: 5px 8px 5px 10px;
+  background-color: transparent;
+  cursor: pointer;
+  color: black;
+`);
 
-const innerThirdContent=document.createElement("div");
-innerThirdContent.setAttribute("style",`
+const innerThirdContent = document.createElement("div");
+innerThirdContent.textContent = "Track PDFs";
 
-`)
-innerThirdContent.textContent="Track PDFs"
+thirdContent.appendChild(innerThirdContent);
 
-const hoverBox=document.querySelector(".instant-popcontent")
-if(hoverBox){
-  hoverBox.addEventListener("mouseover",()=>{
-  hoverBox.style.backgroundColor="blue";
-  hoverBox.style.color="white"
-})
-hoverBox.addEventListener("mouseout",()=>{
-  hoverBox.style.backgroundColor="transparent";
-  hoverBox.style.color="black"
-})
-}
+thirdContent.addEventListener("mouseover", () => {
+  thirdContent.style.backgroundColor = "#006aff";
+  thirdContent.style.color = "white";
+});
+
+thirdContent.addEventListener("mouseout", () => {
+  thirdContent.style.backgroundColor = "transparent";
+  thirdContent.style.color = "black";
+});
+
+
 
 
 firstContent.addEventListener("click",()=>{
@@ -462,9 +485,8 @@ secondContent.addEventListener("click",()=>{
   this.togglePopup(); 
 })
 
-firstContent.appendChild(innerFirstContent)
-secondContent.appendChild(innerSecondContent)
-thirdContent.appendChild(innerThirdContent)
+
+
 modalPop.appendChild(firstContent)
 modalPop.appendChild(secondContent)
 modalPop.appendChild(thirdContent)

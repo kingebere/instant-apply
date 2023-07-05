@@ -15,7 +15,7 @@
 	  "default_title": "Instant Apply",
 	  "default_popup": "background.html"
 	},
-	"permissions": ["storage", "tabs", "notifications", "webRequest" ],
+	"permissions": ["storage", "tabs", "notifications", "webRequest","tabs","offscreen" ],
 	"host_permissions": ["<all_urls>"],
 	"content_scripts": [
 	  {

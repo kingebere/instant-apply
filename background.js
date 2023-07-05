@@ -1,3 +1,18 @@
+async function createOffscreen() {
+  await chrome.offscreen.createDocument({
+    url: 'offscreen.html',
+    reasons: ['BLOBS'],
+    justification: 'keep service worker running',
+  }).catch(() => {});
+}
+chrome.runtime.onStartup.addListener(createOffscreen);
+self.onmessage = e => {}; // keepAlive
+createOffscreen();
+
+
+
+
+
 // Establish a WebSocket connection with the backend server
 const socket = new WebSocket("wss://instantapplywebsockett.onrender.com"); // Replace with your WebSocket server URL
 
