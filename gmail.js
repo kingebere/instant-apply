@@ -363,6 +363,13 @@ class gmailMainScript {
 	}
 
 	handlePopUp() {
+		const modal = document.querySelector(".id-gmai-modal");
+
+    if (modal) {
+
+			return this.togglePopup();
+		}
+
 		const modalSmallPopContainer = document.createElement("div");
 		modalSmallPopContainer.className = "id-gmai-modal";
 		modalSmallPopContainer.setAttribute(
