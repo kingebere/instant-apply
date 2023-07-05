@@ -301,6 +301,7 @@ class gmailMainScript {
 					gmailSubject,
 					gmailContent
 				);
+				this.togglePopup();
 			}
 		} else window.open("https://instantapply.co", "_blank");
 	}
@@ -356,13 +357,14 @@ class gmailMainScript {
 		// } else {
 		// 	modalSmallPopContainer.style.display === "block";
 		// }
-		const modal = document.getElementsByClassName("myModal");
-		document.body.removeChild(modal);
+		const modal = document.getElementsByClassName("id-gmai-modal");
+		document.querySelector(".action_button").removeChild(modal[0]);
+		document.querySelector(".action_button").removeChild(modal[0]);
 	}
 
 	handlePopUp() {
 		const modalSmallPopContainer = document.createElement("div");
-		modalSmallPopContainer.className = "myModal";
+		modalSmallPopContainer.className = "id-gmai-modal";
 		modalSmallPopContainer.setAttribute(
 			"style",
 			`
@@ -454,15 +456,13 @@ class gmailMainScript {
 		innerThirdContent.textContent = "Track PDFs";
 		thirdContent.appendChild(innerThirdContent);
 
+		//append to the dom
 		modalPop.appendChild(firstContent);
 		modalPop.appendChild(secondContent);
 		modalPop.appendChild(thirdContent);
-
 		modalSmallPopContainer.appendChild(modalPop);
 		const button = document.querySelector(".action_button");
-    button.appendChild(modalSmallPopContainer);
-    
-    console.log(document.querySelectorAll(".list"))
+		button.appendChild(modalSmallPopContainer);
 
 		//hover states of the list items
 		Array.from(document.querySelectorAll(".list")).forEach((node) => {
@@ -481,13 +481,12 @@ class gmailMainScript {
 
 		//click listeners
 		firstContent.addEventListener("click", () => {
-			this.handlePopUpbuttonClicked.bind(this);
-			this.togglePopup.bind(this);
+			this.handlePopUpbuttonClicked(this);
 		});
 
 		secondContent.addEventListener("click", () => {
-			this.changeUrl.bind(this);
-			this.togglePopup.bind(this);
+			this.changeUrl(this);
+			this.togglePopup();
 		});
 	}
 
