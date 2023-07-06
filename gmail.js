@@ -164,9 +164,10 @@ class gmailMainScript {
 		this.subscribeformSubmitButton();
 	}
 
-	changeUrl() {
+	async changeUrl() {
 		// Regular expression pattern to match URLs
 		const urlRegex = /(?:(?:https?|ftp):\/\/|www\.)[^\s/$.?#].[^\s]*/g;
+		const session = (await chrome.storage.sync.get("session"))["session"];
 
 		const modifiedPre = document.querySelector(".instant-pre");
 		let newPreContent = modifiedPre.textContent;
@@ -182,16 +183,19 @@ class gmailMainScript {
 			// Replace URLs asynchronously
 			const modifiedUrls = await Promise.all(
 				matches.map(async (match) => {
-					const result = await fetch("https://instantapply.co/api/encryptUrl", {
-						method: "POST",
-						body: JSON.stringify({ match }),
-						headers: {
-							"Content-Type": "application/json",
-						},
-					});
+					const result = await fetch(
+						" https://instantapply.co/api/encryptUrl",
+						{
+							method: "POST",
+							body: JSON.stringify({ session, match }),
+							headers: {
+								"Content-Type": "application/json",
+							},
+						}
+					);
 					const data = await result.text();
 
-					const modifiedUrl = `https://instantapply.co/api/link-tracker?id=${data}`;
+					const modifiedUrl = ` https://instantapply.co/api/t?$=${data}`;
 
 					return modifiedUrl;
 				})
@@ -365,8 +369,7 @@ class gmailMainScript {
 	handlePopUp() {
 		const modal = document.querySelector(".id-gmai-modal");
 
-    if (modal) {
-
+		if (modal) {
 			return this.togglePopup();
 		}
 
