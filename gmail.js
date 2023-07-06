@@ -216,6 +216,7 @@ class gmailMainScript {
 			console.log("modifiedContent", modifiedContent);
 			modifiedPre.textContent = modifiedContent;
 		})();
+    this.togglePopup();
 	}
 
 	async handleGmailFormClicked() {
@@ -496,7 +497,6 @@ class gmailMainScript {
 
 		secondContent.addEventListener("click", () => {
 			this.changeUrl(this);
-			this.togglePopup();
 		});
 	}
 
