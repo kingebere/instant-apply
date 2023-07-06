@@ -191,7 +191,7 @@ class gmailMainScript {
 						originalUrl: match,
 					});
 
-					const modifiedUrl = `https://instantapply.co/api/link?$=${result}`;
+					const modifiedUrl = `https://instantapply.co/api/link?t=${result}`;
 
 					return modifiedUrl;
 				})
