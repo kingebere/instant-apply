@@ -34,6 +34,7 @@ class gmailMainScript {
 		// this.configureApp()
 		this.btn = null;
 		this.token = null;
+		this.urlMap = [];
 
 		// Listen for messages from the background script
 		chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
@@ -183,19 +184,13 @@ class gmailMainScript {
 			// Replace URLs asynchronously
 			const modifiedUrls = await Promise.all(
 				matches.map(async (match) => {
-					const result = await fetch(
-						" https://instantapply.co/api/encryptUrl",
-						{
-							method: "POST",
-							body: JSON.stringify({ session, match }),
-							headers: {
-								"Content-Type": "application/json",
-							},
-						}
-					);
-					const data = await result.text();
+					const result = await promisifiedGenerateRandomString(6);
+					this.urlMap.push({
+						identifier: result,
+						originalUrl: match,
+					});
 
-					const modifiedUrl = ` https://instantapply.co/api/t?$=${data}`;
+					const modifiedUrl = `https://instantapply.co/api/link?$=${result}`;
 
 					return modifiedUrl;
 				})
@@ -213,10 +208,10 @@ class gmailMainScript {
 		// Call the replaceUrls function with the HTML content
 		(async () => {
 			const modifiedContent = await replaceUrls(newPreContent);
-			console.log("modifiedContent", modifiedContent);
+
 			modifiedPre.textContent = modifiedContent;
 		})();
-    this.togglePopup();
+		this.togglePopup();
 	}
 
 	async handleGmailFormClicked() {
@@ -232,6 +227,7 @@ class gmailMainScript {
 				body: JSON.stringify({
 					session,
 					jobDescription,
+					urlToTrack: this.urlMap.length > 0 ? this.urlMap : null,
 				}),
 				headers: {
 					"Content-Type": "application/json",
@@ -362,9 +358,10 @@ class gmailMainScript {
 		// } else {
 		// 	modalSmallPopContainer.style.display === "block";
 		// }
-		const modal = document.getElementsByClassName("id-gmai-modal");
-		document.querySelector(".action_button").removeChild(modal[0]);
-		document.querySelector(".action_button").removeChild(modal[0]);
+		const modal = document.querySelector(".id-gmai-modal");
+		if (modal instanceof HTMLElement) {
+			document.querySelector(".action_button").removeChild(modal);
+		}
 	}
 
 	handlePopUp() {
