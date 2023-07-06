@@ -167,6 +167,7 @@ class gmailMainScript {
 
 	async changeUrl() {
 		// Regular expression pattern to match URLs
+
 		const urlRegex = /(?:(?:https?|ftp):\/\/|www\.)[^\s/$.?#].[^\s]*/g;
 		const session = (await chrome.storage.sync.get("session"))["session"];
 
@@ -233,6 +234,7 @@ class gmailMainScript {
 					"Content-Type": "application/json",
 				},
 			});
+			this.urlMap = [];
 		}
 	}
 
