@@ -40,6 +40,7 @@ class greenhouseMainScript {
 			applicationUrl: window.location.href,
 			location: this.locationElement.textContent,
 			userID: id,
+
 		};
 
 		chrome.storage.sync.set(
@@ -222,6 +223,9 @@ class greenhouseMainScript {
 							veteranstatus,
 							github,
 							filename,
+							location,
+							visaStatus,
+							portfolio
 						},
 					} = this.data;
 
@@ -230,8 +234,14 @@ class greenhouseMainScript {
 					this.updateGithubInputValue(github);
 					// Call the function to update the Linkedin input value
 					this.updateLinkedinInputValue(linkedin);
+						// Call the function to update the Location input value
+						this.updateLocationInputValue(location);
 					// Call the function to update the DOM
 					this.updateGender(gender);
+					//update visa status
+					this.updateVisaInputValue(visaStatus)
+					//update portfolio
+					this.updatePortfolioInputValue(portfolio)
 					// Call the function to update the DOM
 					this.youLatino(youlatino);
 					// Call the function to update the DOM
@@ -341,6 +351,94 @@ class greenhouseMainScript {
 			}
 		}
 	}
+
+
+		//update Location
+		updateLocationInputValue(location) {
+			// Get the div elements containing the labels
+			const divElements = document.querySelectorAll("#custom_fields > .field");
+	
+			// Find the div element with the "Linkedin" label
+			let locationDiv;
+			for (const divElement of divElements) {
+				const label = divElement.querySelector("label");
+				if (label && label.textContent.includes("your location")) {
+					locationDiv = divElement;
+					break;
+				}
+			}
+	
+			// If the "LinkedIn" div element is found, update the input value
+			if (locationDiv) {
+				const input = locationDiv.querySelector('input[type="text"]');
+				if (input) {
+					const updatedValue = location;
+					input.value = updatedValue;
+				}
+			}
+		}
+
+
+
+
+	//update Portfolio
+	updatePortfolioInputValue(portfolio) {
+		// Get the div elements containing the labels
+		const divElements = document.querySelectorAll("#custom_fields > .field");
+
+		// Find the div element with the "Linkedin" label
+		let portfolioDiv;
+		for (const divElement of divElements) {
+			const label = divElement.querySelector("label");
+			if (label && label.textContent.includes("Portfolio")) {
+				portfolioDiv = divElement;
+				break;
+			}
+		}
+
+		// If the "LinkedIn" div element is found, update the input value
+		if (portfolioDiv) {
+			const input = portfolioDiv.querySelector('input[type="text"]');
+			if (input) {
+				const updatedValue = portfolio;
+				input.value = updatedValue;
+			}
+		}
+	}
+
+
+
+
+
+
+			//update Visa status
+			updateVisaInputValue(visaStatus) {
+				// Get the div elements containing the labels
+				const divElements = document.querySelectorAll("#custom_fields > .field");
+		
+				// Find the div element with the "Linkedin" label
+				let visaDiv;
+				for (const divElement of divElements) {
+					const label = divElement.querySelector("label");
+					if (label && label.textContent.includes("visa sponsorship")) {
+						visaDiv = divElement;
+						break;
+					}
+				}
+		
+				// If the "LinkedIn" div element is found, update the input value
+				if (visaDiv) {
+					const input = visaDiv.querySelector(".select2-chosen");
+					const inputValue=visaDiv.querySelector("#job_application_answers_attributes_1_boolean_value")
+					if (input) {
+						const updatedValue = visaStatus;
+						input.textContent = updatedValue;
+
+						const chosenValue= visaStatus==='Yes'?'1':'0';
+inputValue.value=chosenValue
+					}
+				}
+			}
 
 	//add gender
 	updateGender(gender) {
@@ -528,7 +626,9 @@ class greenhouseMainScript {
 		if (
 			/^https:\/\/boards\.greenhouse\.io\/\w+\/jobs\/\d/.test(
 				window.location.href
-			)
+			) ||	/^https:\/\/boards\.eu\.greenhouse\.io\/\w+\/jobs\/\d/.test(
+				window.location.href
+			) 
 		) {
 			window.onload = this.addPopUpButtonToPage();
 		}

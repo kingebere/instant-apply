@@ -3,7 +3,7 @@ class greenhouseMain {
 		//get previous url
 		this.previousUrl = document.referrer;
 		//regex for testing if u are from the apply page
-		this.regexPattern = /^https:\/\/boards\.greenhouse\.io\/\w+\/jobs\/\d/;
+		this.regexPattern = /^https:\/\/boards\.greenhouse\.io\/\w+\/jobs\/\d/ ||	/^https:\/\/boards\.eu\.greenhouse\.io\/\w+\/jobs\/\d/;
 
 		this.configureApp(this.previousUrl);
 		this.jobDescription = null;

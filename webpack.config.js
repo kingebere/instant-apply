@@ -12,6 +12,7 @@ module.exports = {
     submitlever: './submitlever.js',
     submitgreenhouse: './submitgreenhouse.js',
     accesstoken: './accesstoken.js',
+    popup:'./popup.js'
     // Add other entry points for each content script
   },
   output: {
